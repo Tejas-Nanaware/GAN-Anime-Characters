@@ -2,7 +2,7 @@
 #SBATCH -A iit111
 #SBATCH --job-name="gan_anime"
 #SBATCH --output="keras.%j.%N.out"
-#SBATCH --partition=gpu-shared
+#SBATCH --partition=gpu
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=6
 #SBATCH --gres=gpu:1
