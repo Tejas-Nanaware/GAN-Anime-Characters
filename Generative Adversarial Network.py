@@ -184,6 +184,6 @@ for step in range(GAN_STEPS):
     print("gan_metrics")
     print(gan_metrics)
     
-    if ((step % 100) == 0):
+    if ((step % 50) == 0):
         gan_model.save('./GANModels/model_'+current_time+".h5")
 
