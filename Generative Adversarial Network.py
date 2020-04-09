@@ -15,6 +15,8 @@ from keras.optimizers import Adam
 from keras import Model
 from keras import losses
 
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 # MacOS matplotlib kernel issue
 import os
