@@ -6,7 +6,7 @@
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=6
 #SBATCH --gres=gpu:4
-#SBATCH -t 01:00:00
-#Run the
+#SBATCH -t 04:00:00
+#Run the cluster
 module load singularity # load the singularity module
 singularity exec --nv /share/apps/gpu/singularity/images/keras/keras-v2.2.4-tensorflow-v1.12-gpu-20190214.simg python3 run.py
