@@ -5,6 +5,7 @@
 #SBATCH --partition=gpu
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=6
+#SBATCH --gres=gpu:0
 #SBATCH -t 01:00:00
 #Run the
 module load singularity # load the singularity module
