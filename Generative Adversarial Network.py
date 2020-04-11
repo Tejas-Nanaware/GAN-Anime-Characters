@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[18]:
+# In[1]:
 
 
 import numpy as np
@@ -23,7 +23,7 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
-# In[3]:
+# In[2]:
 
 
 train_datagen = image.ImageDataGenerator(rescale=1./255)
@@ -31,7 +31,7 @@ train_gen = train_datagen.flow_from_directory('.', classes=['anime_face'], targe
                                               batch_size = 32, color_mode='rgb')
 
 
-# In[4]:
+# In[3]:
 
 
 # Global Constants
@@ -42,35 +42,65 @@ GAN_STEPS = 1000
 BATCH_SIZE = 32
 
 
-# In[5]:
+# In[4]:
+
+
+train_gen.n
+
+
+# In[8]:
 
 
 def generator_model(noise=NOISE):
     gen_input = Input(shape=noise)
-    generator = layers.Conv2D(filters=512, kernel_size=5, padding='same', dilation_rate=4)(gen_input)
-    generator = layers.LeakyReLU(0.1)(generator)
-    generator = layers.Conv2DTranspose(filters=256, kernel_size=5, padding='same', dilation_rate=4)(generator)
-    generator = layers.BatchNormalization(momentum=0.5)(generator)
-    generator = layers.Conv2D(filters=3, kernel_size=5, activation='tanh', padding='same', dilation_rate=4)(generator)
+    generator = layers.Conv2D(filters=512, kernel_size=5, padding='same', dilation_rate=2)(gen_input)
+    generator = layers.LeakyReLU(alpha=0.3)(generator)
     
+    generator = layers.Conv2DTranspose(filters=512, kernel_size=5, padding='same', dilation_rate=2)(generator)
+    generator = layers.LeakyReLU(alpha=0.3)(generator)
+    
+    generator = layers.Conv2DTranspose(filters=256, kernel_size=4, padding='same', dilation_rate=2)(generator)
+    generator = layers.LeakyReLU(alpha=0.3)(generator)
+    
+    generator = layers.Conv2DTranspose(filters=128, kernel_size=4, padding='same', dilation_rate=2)(generator)
+    generator = layers.LeakyReLU(alpha=0.3)(generator)
+    
+    generator = layers.Conv2D(filters=128, kernel_size=3, padding='same', dilation_rate=2)(generator)
+    generator = layers.LeakyReLU(alpha=0.3)(generator)
+    
+    generator = layers.Conv2DTranspose(filters=64, kernel_size=4, padding='same', dilation_rate=2)(generator)
+    generator = layers.LeakyReLU(alpha=0.3)(generator)
+    
+    generator = layers.Conv2DTranspose(filters=3, kernel_size=5, padding='same', dilation_rate=2)(generator)
+    generator = layers.ReLU()(generator)
     model = Model(inputs=gen_input, outputs=generator)
     model.compile(optimizer=Adam(lr=0.01), loss=losses.categorical_crossentropy, metrics=['accuracy'])
     
     return model
 
 
-# In[6]:
+# In[10]:
 
 
 def discriminator_model(image_shape=IMAGE_SHAPE):
     disc_input = Input(shape=image_shape)
-    discriminator = layers.Conv2D(filters=128, kernel_size=5)(disc_input)
-    discriminator = layers.LeakyReLU(0.1)(discriminator)
-    discriminator = layers.Conv2DTranspose(filters=256, kernel_size=5)(discriminator)
-    discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
-    discriminator = layers.Conv2D(filters=512, kernel_size=5)(discriminator)
+    discriminator = layers.Conv2D(filters=64, kernel_size=5, padding='same', strides=2)(disc_input)
+    discriminator = layers.LeakyReLU(alpha=0.3)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=128, kernel_size=5, padding='same', strides=2)(disc_input)
+    discriminator = layers.LeakyReLU(alpha=0.3)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=256, kernel_size=5, padding='same', strides=2)(disc_input)
+    discriminator = layers.LeakyReLU(alpha=0.3)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=512, kernel_size=5, padding='same', strides=2)(disc_input)
+    discriminator = layers.LeakyReLU(alpha=0.3)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=512, kernel_size=5, padding='same', strides=2)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.3)(discriminator)
+    
     discriminator = layers.Flatten()(discriminator)
-    discriminator = layers.Dense(2, activation='sigmoid')(discriminator)
+    discriminator = layers.Dense(2, activation='softmax')(discriminator)
     
     model = Model(inputs=disc_input, outputs=discriminator)
     model.compile(optimizer=Adam(lr=0.01), loss=losses.binary_crossentropy, metrics=['accuracy'])
@@ -78,14 +108,14 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     return model
 
 
-# In[7]:
+# In[11]:
 
 
 gen_model = generator_model(NOISE)
 gen_model.summary()
 
 
-# In[8]:
+# In[13]:
 
 
 disc_model = discriminator_model()
@@ -93,7 +123,7 @@ disc_model.summary()
 disc_model.trainable = False
 
 
-# In[9]:
+# In[14]:
 
 
 gan_gen_input = Input(shape=NOISE)
@@ -105,7 +135,7 @@ gan_model.compile(optimizer=Adam(lr=0.01), loss=losses.binary_crossentropy, metr
 gan_model.summary()
 
 
-# In[13]:
+# In[15]:
 
 
 def save_fig(predicted, current_time):
@@ -130,15 +160,6 @@ for file in glob.glob('./GeneratedFigures/*'):
 for file in glob.glob('./GANModels/*'):
     if file.endswith('.h5'):
         os.remove(file)
-
-
-# In[14]:
-
-
-gen_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
-predicted = gen_model.predict(gen_noise)
-current_time = time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime())
-save_fig(predicted, current_time)
 
 
 # In[11]:
