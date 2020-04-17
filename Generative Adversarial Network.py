@@ -7,8 +7,9 @@
 import numpy as np
 import time
 import glob
+from sklearn.preprocessing import LabelEncoder
 from keras.preprocessing import image
-from keras.utils import to_categorical
+# from keras.utils import to_categorical
 from keras import Input
 from keras import layers
 from keras.optimizers import Adam
@@ -38,17 +39,11 @@ train_gen = train_datagen.flow_from_directory('.', classes=['anime_face'], targe
 NOISE = (128,128,128)
 IMAGE_SHAPE = train_gen.image_shape
 # GAN_STEPS = int(140000 / train_gen.batch_size)
-GAN_STEPS = 1000
+GAN_STEPS = 500
 BATCH_SIZE = 32
 
 
 # In[4]:
-
-
-train_gen.n
-
-
-# In[8]:
 
 
 def generator_model(noise=NOISE):
@@ -74,12 +69,12 @@ def generator_model(noise=NOISE):
     generator = layers.Conv2DTranspose(filters=3, kernel_size=5, padding='same', dilation_rate=2)(generator)
     generator = layers.ReLU()(generator)
     model = Model(inputs=gen_input, outputs=generator)
-    model.compile(optimizer=Adam(lr=0.01), loss=losses.categorical_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-4), loss=losses.categorical_crossentropy, metrics=['accuracy'])
     
     return model
 
 
-# In[10]:
+# In[5]:
 
 
 def discriminator_model(image_shape=IMAGE_SHAPE):
@@ -100,22 +95,22 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     discriminator = layers.LeakyReLU(alpha=0.3)(discriminator)
     
     discriminator = layers.Flatten()(discriminator)
-    discriminator = layers.Dense(2, activation='softmax')(discriminator)
+    discriminator = layers.Dense(1, activation='sigmoid')(discriminator)
     
     model = Model(inputs=disc_input, outputs=discriminator)
-    model.compile(optimizer=Adam(lr=0.01), loss=losses.binary_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
 
-# In[11]:
+# In[6]:
 
 
 gen_model = generator_model(NOISE)
 gen_model.summary()
 
 
-# In[13]:
+# In[7]:
 
 
 disc_model = discriminator_model()
@@ -123,7 +118,7 @@ disc_model.summary()
 disc_model.trainable = False
 
 
-# In[14]:
+# In[8]:
 
 
 gan_gen_input = Input(shape=NOISE)
@@ -131,11 +126,11 @@ gan_gen = gen_model(gan_gen_input)
 gan_dis = disc_model(gan_gen)
 
 gan_model = Model(inputs=gan_gen_input, outputs=gan_dis)
-gan_model.compile(optimizer=Adam(lr=0.01), loss=losses.binary_crossentropy, metrics=['accuracy'])
+gan_model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
 gan_model.summary()
 
 
-# In[15]:
+# In[9]:
 
 
 def save_fig(predicted, current_time):
@@ -151,7 +146,7 @@ def save_fig(predicted, current_time):
 #     plt.show(block=True)
 
 
-# In[20]:
+# In[10]:
 
 
 for file in glob.glob('./GeneratedFigures/*'):
@@ -162,7 +157,7 @@ for file in glob.glob('./GANModels/*'):
         os.remove(file)
 
 
-# In[11]:
+# In[ ]:
 
 
 for step in range(GAN_STEPS):
@@ -185,6 +180,8 @@ for step in range(GAN_STEPS):
     print("Batch Index: ", train_gen.batch_index)
     combined_data = np.concatenate([real_faces, created_faces])
     combined_labels = to_categorical(np.concatenate([np.ones((BATCH_SIZE, 1)), np.zeros((BATCH_SIZE, 1))]))
+    encoder = LabelEncoder()
+    combined_labels = encoder.fit_transform(combined_labels)
     
     # Train Discriminator
     disc_model.trainable = True
@@ -199,7 +196,8 @@ for step in range(GAN_STEPS):
     disc_model.trainable = False
     print("Creating GAN Noise")
     gan_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
-    gan_labels = to_categorical(np.ones((BATCH_SIZE, 1)))
+    gan_labels = np.ones((BATCH_SIZE, 1))
+    gan_labels = encoder.fit_transform(gan_labels)
     print("Training GAN")
     gan_metrics = gan_model.train_on_batch(gan_noise, gan_labels)
     print("gan_metrics")
