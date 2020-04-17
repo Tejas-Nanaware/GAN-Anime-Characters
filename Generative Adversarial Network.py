@@ -39,7 +39,7 @@ train_gen = train_datagen.flow_from_directory('.', classes=['anime_face'], targe
 NOISE = (128,128,128)
 IMAGE_SHAPE = train_gen.image_shape
 # GAN_STEPS = int(140000 / train_gen.batch_size)
-GAN_STEPS = 500
+GAN_STEPS = 1000
 BATCH_SIZE = 32
 
 
@@ -179,7 +179,7 @@ for step in range(GAN_STEPS):
     real_faces, labels = train_gen.next()
     print("Batch Index: ", train_gen.batch_index)
     combined_data = np.concatenate([real_faces, created_faces])
-    combined_labels = to_categorical(np.concatenate([np.ones((BATCH_SIZE, 1)), np.zeros((BATCH_SIZE, 1))]))
+    combined_labels = np.concatenate([np.ones((BATCH_SIZE, 1)), np.zeros((BATCH_SIZE, 1))])
     encoder = LabelEncoder()
     combined_labels = encoder.fit_transform(combined_labels)
     
