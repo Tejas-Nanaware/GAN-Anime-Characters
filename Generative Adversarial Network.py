@@ -106,23 +106,31 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     disc_input = Input(shape=image_shape)
     discriminator = layers.Conv2D(filters=32, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
 #     discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
-    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.5)(discriminator)
     
     discriminator = layers.Conv2D(filters=64, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
 #     discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
-    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.5)(discriminator)
     
     discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
     discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
-    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.5)(discriminator)
     
     discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
-    discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
-    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+#     discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.5)(discriminator)
     
     discriminator = layers.Conv2D(filters=256, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
     discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
-    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.5)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=256, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
+#     discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.5)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=512, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
+    discriminator = layers.BatchNormalization(momentum=0.5)(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.5)(discriminator)
     
     discriminator = layers.Flatten()(discriminator)
 #     discriminator = layers.Dense(128)(discriminator)
