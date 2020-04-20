@@ -9,8 +9,14 @@ import time
 import glob
 from sklearn.preprocessing import LabelEncoder
 from keras.preprocessing import image
-from skimage.transform import resize
-from skimage.io import imread
+try:
+    from skimage.transform import resize
+except:
+    from skimage.transform import resize
+try:
+    from skimage.io import imread
+except:
+    from skimage.io import imread
 # from PIL import Image
 # from keras.utils import to_categorical
 from keras import Input
@@ -198,7 +204,7 @@ for file in glob.glob('./GANModels/*'):
         os.remove(file)
 
 
-# In[ ]:
+# In[11]:
 
 
 with open('log.csv', 'w') as log:
