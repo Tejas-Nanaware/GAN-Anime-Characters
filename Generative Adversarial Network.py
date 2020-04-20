@@ -47,7 +47,7 @@ NOISE = (1,1,256)
 IMAGE_SHAPE = (128,128,3)
 # GAN_STEPS = int(140000 / train_gen.batch_size)
 GAN_STEPS = 300
-BATCH_SIZE = 32
+BATCH_SIZE = 256
 
 
 # In[3]:
