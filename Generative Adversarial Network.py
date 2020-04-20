@@ -174,6 +174,9 @@ gan_model.summary()
 
 
 def save_fig(predicted, current_time):
+    # Only 32 images will be printed
+    if BATCH_SIZE > 32:
+        predicted = predicted[:32]
     num_images = predicted.shape[0]
     fig = plt.figure(figsize=(15,7))
     columns = 8
