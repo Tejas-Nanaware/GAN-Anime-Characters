@@ -32,7 +32,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # Global Constants
 NOISE = (100,)
 IMAGE_SHAPE = (64,64,3)
-GAN_STEPS = 500
+GAN_STEPS = 2000
 BATCH_SIZE = 64
 
 
@@ -229,7 +229,7 @@ def save_fig(predicted, current_time):
 # In[9]:
 
 
-def PIL_get_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_pattern='./animeface-character-dataset/*'):
+def PIL_get_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_pattern='./anime_face/000*'):
     batch_image_shape = (batch_size,) + image_shape
     batch_images = np.empty(batch_image_shape, dtype=np.float32)
     all_images = glob.glob(data_search_pattern)
