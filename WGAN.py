@@ -203,7 +203,7 @@ for step in range(1, GAN_STEPS+1):
     print('**************************************')
     
     current_time = time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime())
-    current_time = step
+    current_time = str(step)
     print("Creating noise")
     gen_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
     print("Predicting noise")
