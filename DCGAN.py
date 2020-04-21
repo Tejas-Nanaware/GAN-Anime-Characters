@@ -32,8 +32,8 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # Global Constants
 NOISE = (1,1,100)
 IMAGE_SHAPE = (128,128,3)
-GAN_STEPS = 300
-BATCH_SIZE = 128
+GAN_STEPS = 500
+BATCH_SIZE = 64
 
 
 # def generator_model(noise=NOISE):
@@ -254,7 +254,7 @@ for file in glob.glob('./GANModels/*'):
         os.remove(file)
 
 
-# In[ ]:
+# In[11]:
 
 
 with open('log.csv', 'w') as log:
