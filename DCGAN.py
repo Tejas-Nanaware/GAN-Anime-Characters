@@ -154,7 +154,7 @@ def save_fig(predicted, current_time):
 # In[9]:
 
 
-def PIL_get_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_pattern='./animeface-character-dataset/data/*'):
+def PIL_get_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_pattern='./animeface-character-dataset/*'):
     batch_image_shape = (batch_size,) + image_shape
     batch_images = np.empty(batch_image_shape, dtype=np.float32)
     all_images = glob.glob(data_search_pattern)
