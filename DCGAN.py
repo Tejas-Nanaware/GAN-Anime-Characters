@@ -200,7 +200,7 @@ for step in range(1, GAN_STEPS+1):
     gen_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
     print("Predicting noise")
     created_faces = gen_model.predict(gen_noise)
-    if ((step % 1) == 0):
+    if ((step % 10) == 0):
         save_fig(created_faces, current_time)
     
     # Merge real and fake data
