@@ -1,7 +1,6 @@
 /anime_face/*
 *.zip
 GeneratedFigures/*
+GeneratedFigures */*
 GANModels/*
-
-
 
