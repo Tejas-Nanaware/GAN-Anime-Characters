@@ -60,7 +60,7 @@ def generator_model(noise=NOISE):
     generator = layers.LeakyReLU()(generator)
     generator = layers.Reshape((16, 16, 128))(generator)
     
-    generator = layers.Conv2DTranspose(filters=512, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.Conv2DTranspose(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     generator = layers.BatchNormalization()(generator)
     generator = layers.LeakyReLU()(generator)
     
@@ -68,7 +68,7 @@ def generator_model(noise=NOISE):
     generator = layers.BatchNormalization()(generator)
     generator = layers.LeakyReLU()(generator)
     
-    generator = layers.Conv2D(filters=256, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.Conv2D(filters=128, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     generator = layers.BatchNormalization()(generator)
     generator = layers.LeakyReLU()(generator)
     
@@ -83,7 +83,7 @@ def generator_model(noise=NOISE):
     generator = layers.Conv2DTranspose(filters=3, kernel_size=(5,5), strides=(2,2), activation='tanh', use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     
     model = Model(inputs=gen_input, outputs=generator)
-    model.compile(optimizer=Adam(lr=1e-6), loss=losses.binary_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
@@ -94,35 +94,31 @@ def generator_model(noise=NOISE):
 def discriminator_model(image_shape=IMAGE_SHAPE):
     disc_input = Input(shape=image_shape)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.Conv2D(filters=128, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.Conv2D(filters=128, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=256, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.Conv2D(filters=256, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=256, kernel_size=(7,7), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.Conv2D(filters=256, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=512, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.Conv2D(filters=512, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=512, kernel_size=(3,3), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.Conv2D(filters=512, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=1024, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
-    discriminator = layers.LeakyReLU()(discriminator)
-    discriminator = layers.Dropout(0.3)(discriminator)
-    
-    discriminator = layers.Conv2D(filters=1024, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.Conv2D(filters=1024, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
@@ -243,7 +239,7 @@ gan_gen = gen_model(gan_gen_input)
 gan_dis = disc_model(gan_gen)
 
 gan_model = Model(inputs=gan_gen_input, outputs=gan_dis)
-gan_model.compile(optimizer=Adam(lr=1e-6), loss=losses.binary_crossentropy, metrics=['accuracy'])
+gan_model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
 gan_model.summary()
 
 
