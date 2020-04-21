@@ -47,19 +47,19 @@ def generator_model(noise=NOISE):
     generator = layers.Reshape((32, 32, 128))(generator)
     
     generator = layers.Conv2D(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-    generator = layers.BatchNormalization(momentum=0.5)(generator)
+#     generator = layers.BatchNormalization(momentum=0.5)(generator)
     generator = layers.LeakyReLU()(generator)
     
     generator = layers.Conv2DTranspose(filters=256, kernel_size=(4,4), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-    generator = layers.BatchNormalization(momentum=0.5)(generator)
+#     generator = layers.BatchNormalization(momentum=0.5)(generator)
     generator = layers.LeakyReLU()(generator)
     
     generator = layers.Conv2D(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-    generator = layers.BatchNormalization(momentum=0.5)(generator)
+#     generator = layers.BatchNormalization(momentum=0.5)(generator)
     generator = layers.LeakyReLU()(generator)
     
     generator = layers.Conv2DTranspose(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-    generator = layers.BatchNormalization(momentum=0.5)(generator)
+#     generator = layers.BatchNormalization(momentum=0.5)(generator)
     generator = layers.LeakyReLU()(generator)
         
     generator = layers.Conv2DTranspose(filters=3, kernel_size=(7,7), strides=(1,1), activation='tanh', use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
