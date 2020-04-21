@@ -124,7 +124,7 @@ gan_gen = gen_model(gan_gen_input)
 gan_dis = disc_model(gan_gen)
 
 gan_model = Model(inputs=gan_gen_input, outputs=gan_dis)
-gan_model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
+gan_model.compile(optimizer=Adam(lr=0.00015, beta_1=0.5), loss=losses.binary_crossentropy, metrics=['accuracy'])
 gan_model.summary()
 
 
