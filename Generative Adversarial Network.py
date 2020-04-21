@@ -60,11 +60,11 @@ def generator_model(noise=NOISE):
     generator = layers.LeakyReLU()(generator)
     generator = layers.Reshape((16, 16, 128))(generator)
     
-    generator = layers.Conv2DTranspose(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.Conv2DTranspose(filters=128, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     generator = layers.BatchNormalization()(generator)
     generator = layers.LeakyReLU()(generator)
     
-    generator = layers.Conv2DTranspose(filters=256, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.Conv2DTranspose(filters=128, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     generator = layers.BatchNormalization()(generator)
     generator = layers.LeakyReLU()(generator)
     
