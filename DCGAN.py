@@ -140,11 +140,7 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     
     discriminator = layers.Conv2D(filters=128, kernel_size=(3,3), padding='same', strides=(1,1), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
-#     discriminator = layers.Dropout(0.3)(discriminator)
-    
-    discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
-    discriminator = layers.LeakyReLU()(discriminator)
-#     discriminator = layers.Dropout(0.3)(discriminator)
+    discriminator = layers.Dropout(0.3)(discriminator)
     
     discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
@@ -152,7 +148,11 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     
     discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
-#     discriminator = layers.Dropout(0.3)(discriminator)
+    discriminator = layers.Dropout(0.3)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
+    discriminator = layers.LeakyReLU()(discriminator)
+    discriminator = layers.Dropout(0.3)(discriminator)
     
 #     discriminator = layers.Conv2D(filters=512, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
 #     discriminator = layers.LeakyReLU()(discriminator)
@@ -171,7 +171,7 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     discriminator = layers.Dense(1, activation='sigmoid')(discriminator)
     
     model = Model(inputs=disc_input, outputs=discriminator)
-    model.compile(optimizer=Adam(lr=1e-4, beta_1=0.5), loss=losses.binary_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
@@ -199,7 +199,7 @@ gan_gen = gen_model(gan_gen_input)
 gan_dis = disc_model(gan_gen)
 
 gan_model = Model(inputs=gan_gen_input, outputs=gan_dis)
-gan_model.compile(optimizer=Adam(lr=1e-5, beta_1=0.5), loss=losses.binary_crossentropy, metrics=['accuracy'])
+gan_model.compile(optimizer=RMSprop(lr=0.0002, clipvalue=1.0, decay=1e-8), loss=losses.binary_crossentropy, metrics=['accuracy'])
 gan_model.summary()
 
 
