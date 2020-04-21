@@ -4,4 +4,6 @@ GeneratedFigures/*
 GeneratedFigures */*
 GANModels/*
 animeface-character-dataset/*
-
+WGeneratedFigures/*
+WGeneratedFigures */*
+WGANModels/*
