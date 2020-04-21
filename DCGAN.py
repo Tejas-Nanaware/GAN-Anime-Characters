@@ -171,7 +171,7 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     discriminator = layers.Dense(1, activation='sigmoid')(discriminator)
     
     model = Model(inputs=disc_input, outputs=discriminator)
-    model.compile(optimizer=RMSprop(lr=0.0004, clipvalue=1.0, decay=1e-8), loss=losses.binary_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-4, beta_1=0.5), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
@@ -199,7 +199,7 @@ gan_gen = gen_model(gan_gen_input)
 gan_dis = disc_model(gan_gen)
 
 gan_model = Model(inputs=gan_gen_input, outputs=gan_dis)
-gan_model.compile(optimizer=RMSprop(lr=0.0004, clipvalue=1.0, decay=1e-8), loss=losses.binary_crossentropy, metrics=['accuracy'])
+gan_model.compile(optimizer=Adam(lr=1e-5, beta_1=0.5), loss=losses.binary_crossentropy, metrics=['accuracy'])
 gan_model.summary()
 
 
