@@ -33,7 +33,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 NOISE = (1,1,100)
 IMAGE_SHAPE = (128,128,3)
 GAN_STEPS = 500
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 
 
 # def generator_model(noise=NOISE):
