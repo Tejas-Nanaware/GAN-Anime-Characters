@@ -46,7 +46,7 @@ NOISE = (1,1,100)
 IMAGE_SHAPE = (128,128,3)
 # GAN_STEPS = int(140000 / train_gen.batch_size)
 GAN_STEPS = 1000
-BATCH_SIZE = 256
+BATCH_SIZE = 128
 
 
 # In[3]:
@@ -310,12 +310,12 @@ for file in glob.glob('./GANModels/*'):
         os.remove(file)
 
 
-# In[ ]:
+# In[12]:
 
 
 with open('log.csv', 'w') as log:
     log.write('Step,DiscLoss,DiscAcc,GANLoss,GANAcc\n')
-for step in range(GAN_STEPS):
+for step in range(1, GAN_STEPS+1):
     print('**************************************')
     print()
     print('               Step: ', step)
