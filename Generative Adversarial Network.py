@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[21]:
 
 
 import numpy as np
@@ -38,18 +38,18 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # train_gen = train_datagen.flow_from_directory('.', classes=['anime_face'], target_size = (128, 128), 
 #                                               batch_size = 32, color_mode='rgb')
 
-# In[2]:
+# In[22]:
 
 
 # Global Constants
 NOISE = (1,1,100)
-IMAGE_SHAPE = (128,128,3)
+IMAGE_SHAPE = (64,64,3)
 # GAN_STEPS = int(140000 / train_gen.batch_size)
 GAN_STEPS = 250
 BATCH_SIZE = 64
 
 
-# In[13]:
+# In[23]:
 
 
 def generator_model(noise=NOISE):
@@ -64,9 +64,9 @@ def generator_model(noise=NOISE):
     generator = layers.BatchNormalization()(generator)
     generator = layers.LeakyReLU()(generator)
     
-    generator = layers.Conv2DTranspose(filters=128, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-    generator = layers.BatchNormalization()(generator)
-    generator = layers.LeakyReLU()(generator)
+#     generator = layers.Conv2DTranspose(filters=128, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+#     generator = layers.BatchNormalization()(generator)
+#     generator = layers.LeakyReLU()(generator)
     
     generator = layers.Conv2D(filters=128, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     generator = layers.BatchNormalization()(generator)
@@ -88,17 +88,17 @@ def generator_model(noise=NOISE):
     return model
 
 
-# In[14]:
+# In[27]:
 
 
 def discriminator_model(image_shape=IMAGE_SHAPE):
     disc_input = Input(shape=image_shape)
     
-    discriminator = layers.Conv2D(filters=64, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
+    discriminator = layers.Conv2D(filters=128, kernel_size=(3,3), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=64, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
+    discriminator = layers.Conv2D(filters=128, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-2))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
@@ -216,14 +216,14 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
 #     
 #     return model
 
-# In[15]:
+# In[28]:
 
 
 gen_model = generator_model(NOISE)
 gen_model.summary()
 
 
-# In[16]:
+# In[29]:
 
 
 disc_model = discriminator_model()
@@ -231,7 +231,7 @@ disc_model.summary()
 disc_model.trainable = False
 
 
-# In[17]:
+# In[30]:
 
 
 gan_gen_input = Input(shape=NOISE)
@@ -243,7 +243,7 @@ gan_model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metr
 gan_model.summary()
 
 
-# In[8]:
+# In[31]:
 
 
 def save_fig(predicted, current_time):
@@ -266,7 +266,7 @@ def save_fig(predicted, current_time):
     plt.close('all')
 
 
-# In[9]:
+# In[32]:
 
 
 def get_real_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_pattern='./anime_face/00[5-9]*'):
@@ -281,7 +281,7 @@ def get_real_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_
     return batch_images
 
 
-# In[10]:
+# In[33]:
 
 
 def PIL_get_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_pattern='./anime_face/00[5-9]*'):
@@ -299,7 +299,7 @@ def PIL_get_images(batch_size=BATCH_SIZE, image_shape=IMAGE_SHAPE, data_search_p
     return batch_images
 
 
-# In[11]:
+# In[34]:
 
 
 for file in glob.glob('./GeneratedFigures/*'):
@@ -310,7 +310,7 @@ for file in glob.glob('./GANModels/*'):
         os.remove(file)
 
 
-# In[12]:
+# In[35]:
 
 
 with open('log.csv', 'w') as log:
