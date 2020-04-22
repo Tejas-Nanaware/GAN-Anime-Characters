@@ -1,6 +1,6 @@
 #!/bin/sh
 #SBATCH -A iit111
-#SBATCH --job-name="gan_anime"
+#SBATCH --job-name="gan_mnist"
 #SBATCH --output="keras.%j.%N.out"
 #SBATCH --partition=gpu
 #SBATCH --nodes=2
