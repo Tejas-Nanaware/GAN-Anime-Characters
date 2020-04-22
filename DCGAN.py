@@ -32,7 +32,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # Global Constants
 NOISE = (100,)
 IMAGE_SHAPE = (64,64,3)
-GAN_STEPS = 500
+GAN_STEPS = 2000
 BATCH_SIZE = 64
 
 
