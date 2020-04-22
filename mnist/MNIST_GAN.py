@@ -200,7 +200,8 @@ for step in range(1, GAN_STEPS+1):
     print('**************************************')
     
     if ((step % 1) == 0):
-        save_fig(created_faces, str(step))
+        created_digits = gen_model.predict(gen_noise)
+        save_fig(created_digits, str(step))
     
     real_disc_metrics, gen_disc_metrics, gan_metrics = []
     for digit_batch in train_set:
