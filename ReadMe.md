@@ -3,7 +3,6 @@ Create a Generative Adversarial Network that creates anime faces.
 
 # Dataset
 The dataset consists of high resolution 140,000 512x512 images of anime faces which is of about 11GB and can be downloaded [here](https://www.kaggle.com/lukexng/animefaces-512x512).  
-Switched dataset to [this one](https://www.kaggle.com/aadilmalik94/animecharacterfaces).  
 
 # Reference Papers
 1. Jin, Y., Zhang, J., Li, M., Tian, Y., Zhu, H., & Fang, Z. (2017). Towards the automatic anime characters creation with generative adversarial networks. arXiv preprint arXiv:1708.05509. [Primary paper](https://arxiv.org/abs/1708.05509).
