@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[34]:
+# In[1]:
 
 
 import numpy as np
@@ -14,15 +14,15 @@ from keras import losses
 from keras.optimizers import Adam
 from keras.regularizers import l2
 from tensorflow.data import Dataset
-# import matplotlib as mpl
-# mpl.use('Agg')
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 # MacOS matplotlib kernel issue
 import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
-# In[5]:
+# In[2]:
 
 
 (train_images, train_labels), (_, _) = mnist.load_data()
@@ -30,23 +30,21 @@ train_images = train_images.reshape(train_images.shape[0], 28, 28, 1).astype('fl
 train_images = (train_images - 127.5) / 127.5
 
 
-# In[18]:
+# In[3]:
 
 
 BUFFER_SIZE = 60000
-BATCH_SIZE = 128
+BATCH_SIZE = 256
 NOISE = (100,)
 GAN_STEPS = 100
 IMAGE_SHAPE = (28, 28, 1)
 
 
-# In[10]:
+# train_set = Dataset.from_tensor_slices(train_images).shuffle(BUFFER_SIZE).batch(BATCH_SIZE)
 
+# train_images[len(train_images):len(train_images)+BATCH_SIZE].shape
 
-train_set = Dataset.from_tensor_slices(train_images).shuffle(BUFFER_SIZE).batch(BATCH_SIZE)
-
-
-# In[14]:
+# In[4]:
 
 
 def generator_model(noise=NOISE):
@@ -68,12 +66,12 @@ def generator_model(noise=NOISE):
     generator = layers.Conv2DTranspose(filters=1, kernel_size=(5,5), strides=(2,2), activation='tanh', use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     
     model = Model(inputs=gen_input, outputs=generator)
-    model.compile(optimizer=Adam(lr=1e-4), loss=losses.categorical_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
 
-# In[19]:
+# In[5]:
 
 
 def discriminator_model(image_shape=IMAGE_SHAPE):
@@ -89,22 +87,22 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
         
     discriminator = layers.Flatten()(discriminator)
     discriminator = layers.Dropout(0.4)(discriminator)
-    discriminator = layers.Dense(1, activation='softmax')(discriminator)
+    discriminator = layers.Dense(1, activation='sigmoid')(discriminator)
     
     model = Model(inputs=disc_input, outputs=discriminator)
-    model.compile(optimizer=Adam(lr=1e-4), loss=losses.categorical_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
 
-# In[20]:
+# In[6]:
 
 
 gen_model = generator_model(NOISE)
 gen_model.summary()
 
 
-# In[22]:
+# In[7]:
 
 
 disc_model = discriminator_model()
@@ -112,7 +110,7 @@ disc_model.summary()
 disc_model.trainable = False
 
 
-# In[24]:
+# In[8]:
 
 
 gan_gen_input = Input(shape=NOISE)
@@ -120,11 +118,11 @@ gan_gen = gen_model(gan_gen_input)
 gan_dis = disc_model(gan_gen)
 
 gan_model = Model(inputs=gan_gen_input, outputs=gan_dis)
-gan_model.compile(optimizer=Adam(lr=1e-4), loss=losses.categorical_crossentropy, metrics=['accuracy'])
+gan_model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
 gan_model.summary()
 
 
-# In[31]:
+# In[9]:
 
 
 def save_fig(predicted, step):
@@ -140,13 +138,13 @@ def save_fig(predicted, step):
         my_image = predicted[i]
         # Denormalize Image
         my_image = ((my_image + 1) * 127.5) / 255
-#         plt.imshow(my_image[:, :, 0], cmap='gray')
+        plt.imshow(my_image[:, :, 0], cmap='gray')
     plt.savefig('./GeneratedDigits/image_'+step+'.jpg', bbox_inches = 'tight', pad_inches = 0.1)
-    plt.show(block=True)
+#     plt.show(block=True)
     plt.close('all')
 
 
-# In[35]:
+# In[10]:
 
 
 for file in glob.glob('./GeneratedDigits/*'):
@@ -157,7 +155,7 @@ for file in glob.glob('./DigitModels/*'):
         os.remove(file)
 
 
-# In[38]:
+# In[11]:
 
 
 def train_batch(images):
@@ -172,7 +170,7 @@ def train_batch(images):
     disc_model.trainable = True
     gen_model.trainable = False
 
-    real_disc_metrics = disc_model.train_on_batch(digit_batch, real_labels)
+    real_disc_metrics = disc_model.train_on_batch(images, real_labels)
     gen_disc_metrics = disc_model.train_on_batch(created_digits, fake_labels)
 
     # Train GAN
@@ -186,7 +184,7 @@ def train_batch(images):
     return real_disc_metrics, gen_disc_metrics, gan_metrics
 
 
-# In[ ]:
+# In[14]:
 
 
 with open('mnist_log.csv', 'w') as log:
@@ -200,17 +198,27 @@ for step in range(1, GAN_STEPS+1):
     print('**************************************')
     
     if ((step % 1) == 0):
+        gen_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
         created_digits = gen_model.predict(gen_noise)
         save_fig(created_digits, str(step))
     
-    real_disc_metrics, gen_disc_metrics, gan_metrics = []
-    for digit_batch in train_set:
-        real_disc_metrics, gen_disc_metrics, gan_metrics = train_batch(digit_batch)
+    real_disc_metrics, gen_disc_metrics, gan_metrics = [], [], []
+    counter = 1
+    start = 0
+    end = BATCH_SIZE
+    sliced = train_images[start:end]
+    while (sliced.shape[0] > 0):
+#         print(counter)
+        real_disc_metrics, gen_disc_metrics, gan_metrics = train_batch(sliced)
+        counter +=1
+        start += BATCH_SIZE
+        end += BATCH_SIZE
+        sliced = train_images[start:end]
     
     # Append Log
     with open('mnist_log.csv', 'a') as log:
         log.write('%d,%f,%f,%f,%f,%f,%f\n' % (step, real_disc_metrics[0], real_disc_metrics[1], gen_disc_metrics[0], gen_disc_metrics[1], gan_metrics[0], gan_metrics[1]))
-    if ((step % 100) == 0):
+    if ((step % 10) == 0):
         gan_model.save('./DigitModels/GANmodel_'+str(step)+'.h5')
         gen_model.trainable = True
         gen_model.save('./DigitModels/GENmodel_'+str(step)+'.h5')
