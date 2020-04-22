@@ -32,7 +32,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # Global Constants
 NOISE = (100,)
 IMAGE_SHAPE = (64,64,3)
-GAN_STEPS = 10000
+GAN_STEPS = 500
 BATCH_SIZE = 64
 
 
@@ -185,8 +185,8 @@ for file in glob.glob('./GANModels/*'):
 
 
 with open('log.csv', 'w') as log:
-    log.write('Step,DiscLoss,DiscAcc,GANLoss,GANAcc\n')
-#     log.write('Step,RealDiscLoss,RealDiscAcc,GenDiscLoss,GenDiscAcc,GANLoss,GANAcc\n')
+#     log.write('Step,DiscLoss,DiscAcc,GANLoss,GANAcc\n')
+    log.write('Step,RealDiscLoss,RealDiscAcc,GenDiscLoss,GenDiscAcc,GANLoss,GANAcc\n')
 for step in range(1, GAN_STEPS+1):
     print('**************************************')
     print()
@@ -203,37 +203,37 @@ for step in range(1, GAN_STEPS+1):
     if ((step % 10) == 0):
         save_fig(created_faces, current_time)
     
-    # Merge real and fake data
-    real_faces = PIL_get_images()
-#     print("Batch Index: ", train_gen.batch_index)
-    combined_data = np.concatenate([real_faces, created_faces])
-    combined_labels = np.concatenate([np.ones((BATCH_SIZE, 1), dtype=np.int).ravel(), np.zeros((BATCH_SIZE, 1), dtype=np.int).ravel()])
-    
-    # Train Discriminator
-    disc_model.trainable = True
-    gen_model.trainable = False
-    print("Training Discriminator")
-    disc_metrics = disc_model.train_on_batch(combined_data, combined_labels)
-    print("disc_metrics")
-    print(disc_metrics)
-
 #     # Merge real and fake data
 #     real_faces = PIL_get_images()
 # #     print("Batch Index: ", train_gen.batch_index)
-#     real_labels = np.ones((BATCH_SIZE, 1), dtype=np.int).ravel()
-#     fake_labels = np.zeros((BATCH_SIZE, 1), dtype=np.int).ravel()   
+#     combined_data = np.concatenate([real_faces, created_faces])
+#     combined_labels = np.concatenate([np.ones((BATCH_SIZE, 1), dtype=np.int).ravel(), np.zeros((BATCH_SIZE, 1), dtype=np.int).ravel()])
     
 #     # Train Discriminator
 #     disc_model.trainable = True
 #     gen_model.trainable = False
-#     print("Training Real Discriminator")
-#     real_disc_metrics = disc_model.train_on_batch(real_faces, real_labels)
+#     print("Training Discriminator")
+#     disc_metrics = disc_model.train_on_batch(combined_data, combined_labels)
 #     print("disc_metrics")
-#     print(real_disc_metrics)
-#     print("Training Fake Discriminator")
-#     gen_disc_metrics = disc_model.train_on_batch(created_faces, fake_labels)
-#     print("disc_metrics")
-#     print(gen_disc_metrics)
+#     print(disc_metrics)
+
+    # Merge real and fake data
+    real_faces = PIL_get_images()
+#     print("Batch Index: ", train_gen.batch_index)
+    real_labels = np.ones((BATCH_SIZE, 1), dtype=np.int).ravel()
+    fake_labels = np.zeros((BATCH_SIZE, 1), dtype=np.int).ravel()   
+    
+    # Train Discriminator
+    disc_model.trainable = True
+    gen_model.trainable = False
+    print("Training Real Discriminator")
+    real_disc_metrics = disc_model.train_on_batch(real_faces, real_labels)
+    print("disc_metrics")
+    print(real_disc_metrics)
+    print("Training Fake Discriminator")
+    gen_disc_metrics = disc_model.train_on_batch(created_faces, fake_labels)
+    print("disc_metrics")
+    print(gen_disc_metrics)
 
 
     
@@ -250,8 +250,8 @@ for step in range(1, GAN_STEPS+1):
     
     # Append Log
     with open('log.csv', 'a') as log:
-        log.write('%d,%f,%f,%f,%f\n' % (step, disc_metrics[0], disc_metrics[1], gan_metrics[0], gan_metrics[1]))
-#         log.write('%d,%f,%f,%f,%f,%f,%f\n' % (step, real_disc_metrics[0], real_disc_metrics[1], gen_disc_metrics[0], gen_disc_metrics[1], gan_metrics[0], gan_metrics[1]))
+#         log.write('%d,%f,%f,%f,%f\n' % (step, disc_metrics[0], disc_metrics[1], gan_metrics[0], gan_metrics[1]))
+        log.write('%d,%f,%f,%f,%f,%f,%f\n' % (step, real_disc_metrics[0], real_disc_metrics[1], gen_disc_metrics[0], gen_disc_metrics[1], gan_metrics[0], gan_metrics[1]))
     if ((step % 50) == 0):
         gan_model.save('./GANModels/GANmodel_'+current_time+'.h5')
         gen_model.trainable = True
