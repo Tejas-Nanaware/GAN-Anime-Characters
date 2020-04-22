@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[4]:
 
 
 import numpy as np
@@ -22,7 +22,7 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
-# In[2]:
+# In[5]:
 
 
 (train_images, train_labels), (_, _) = mnist.load_data()
@@ -30,7 +30,7 @@ train_images = train_images.reshape(train_images.shape[0], 28, 28, 1).astype('fl
 train_images = (train_images - 127.5) / 127.5
 
 
-# In[3]:
+# In[6]:
 
 
 BUFFER_SIZE = 60000
@@ -40,30 +40,33 @@ GAN_STEPS = 1000
 IMAGE_SHAPE = (28, 28, 1)
 
 
-# train_set = Dataset.from_tensor_slices(train_images).shuffle(BUFFER_SIZE).batch(BATCH_SIZE)
-
-# train_images[len(train_images):len(train_images)+BATCH_SIZE].shape
-
-# In[4]:
+# In[15]:
 
 
 def generator_model(noise=NOISE):
     gen_input = Input(shape=noise)
     
-    generator = layers.Dense(7 * 7 * 256, use_bias=False)(gen_input)
-    generator = layers.LeakyReLU()(generator)
-    generator = layers.Reshape((7, 7, 256))(generator)
+    generator = layers.Dense(7 * 7 * 64, use_bias=False)(gen_input)
+    generator = layers.BatchNormalization(momentum=0.9)(generator)
+    enerator = layers.LeakyReLU(alpha=0.2)(generator)
+    generator = layers.Reshape((7, 7, 64))(generator)
+    generator = layers.Dropout(0.4)(generator)
     
-    generator = layers.Conv2DTranspose(filters=128, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-    generator = layers.BatchNormalization(momentum=0.5)(generator)
-    generator = layers.LeakyReLU()(generator)
+    generator = layers.UpSampling2D()(generator)
+    generator = layers.Conv2DTranspose(filters=128, kernel_size=(5,5), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.BatchNormalization(momentum=0.9)(generator)
+    generator = layers.LeakyReLU(alpha=0.2)(generator)
     
+    generator = layers.UpSampling2D()(generator)
+    generator = layers.Conv2DTranspose(filters=64, kernel_size=(5,5), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.BatchNormalization(momentum=0.9)(generator)
+    generator = layers.LeakyReLU(alpha=0.2)(generator)
     
-    generator = layers.Conv2DTranspose(filters=64, kernel_size=(5,5), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-    generator = layers.BatchNormalization(momentum=0.5)(generator)
-    generator = layers.LeakyReLU()(generator)
+    generator = layers.Conv2DTranspose(filters=32, kernel_size=(5,5), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.BatchNormalization(momentum=0.9)(generator)
+    generator = layers.LeakyReLU(alpha=0.2)(generator)
             
-    generator = layers.Conv2DTranspose(filters=1, kernel_size=(5,5), strides=(2,2), activation='tanh', use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.Conv2DTranspose(filters=1, kernel_size=(5,5), activation='tanh', use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     
     model = Model(inputs=gen_input, outputs=generator)
     model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
@@ -71,22 +74,29 @@ def generator_model(noise=NOISE):
     return model
 
 
-# In[5]:
+# In[16]:
 
 
 def discriminator_model(image_shape=IMAGE_SHAPE):
     disc_input = Input(shape=image_shape)
     
-    discriminator = layers.Conv2D(filters=64, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
-    discriminator = layers.LeakyReLU()(discriminator)
-    discriminator = layers.Dropout(0.3)(discriminator)
+    discriminator = layers.Conv2D(filters=64, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(disc_input)
+    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.Dropout(0.4)(discriminator)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
-    discriminator = layers.LeakyReLU()(discriminator)
-    discriminator = layers.Dropout(0.3)(discriminator)
+    discriminator = layers.Conv2D(filters=128, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.Dropout(0.4)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=256, kernel_size=(5,5), padding='same', strides=(2,2), kernel_initializer='glorot_uniform')(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.Dropout(0.4)(discriminator)
+    
+    discriminator = layers.Conv2D(filters=512, kernel_size=(5,5), padding='same', strides=(1,1), kernel_initializer='glorot_uniform')(discriminator)
+    discriminator = layers.LeakyReLU(alpha=0.2)(discriminator)
+    discriminator = layers.Dropout(0.4)(discriminator)
         
     discriminator = layers.Flatten()(discriminator)
-    discriminator = layers.Dropout(0.4)(discriminator)
     discriminator = layers.Dense(1, activation='sigmoid')(discriminator)
     
     model = Model(inputs=disc_input, outputs=discriminator)
@@ -95,14 +105,14 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     return model
 
 
-# In[6]:
+# In[17]:
 
 
 gen_model = generator_model(NOISE)
 gen_model.summary()
 
 
-# In[7]:
+# In[18]:
 
 
 disc_model = discriminator_model()
@@ -110,7 +120,7 @@ disc_model.summary()
 disc_model.trainable = False
 
 
-# In[8]:
+# In[11]:
 
 
 gan_gen_input = Input(shape=NOISE)
