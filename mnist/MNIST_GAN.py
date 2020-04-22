@@ -160,12 +160,12 @@ for file in glob.glob('./DigitModels/*'):
 
 def train_batch(images):
     # Create digits using generator
-    gen_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
+    gen_noise = np.random.normal(loc=0, scale=1, size=(images.shape[0],)+NOISE)
     created_digits = gen_model.predict(gen_noise)
 
     # Train Discriminator
-    real_labels = np.ones((BATCH_SIZE, 1), dtype=np.int).ravel()
-    fake_labels = np.zeros((BATCH_SIZE, 1), dtype=np.int).ravel()
+    real_labels = np.ones((images.shape[0], 1), dtype=np.int).ravel()
+    fake_labels = np.zeros((images.shape[0], 1), dtype=np.int).ravel()
 
     disc_model.trainable = True
     gen_model.trainable = False
@@ -177,8 +177,8 @@ def train_batch(images):
     gen_model.trainable = True
     disc_model.trainable = False
 
-    gan_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
-    gan_labels = np.ones((BATCH_SIZE, 1), dtype=np.int).ravel()
+    gan_noise = np.random.normal(loc=0, scale=1, size=(images.shape[0],)+NOISE)
+    gan_labels = np.ones((images.shape[0], 1), dtype=np.int).ravel()
     gan_metrics = gan_model.train_on_batch(gan_noise, gan_labels)
     
     return real_disc_metrics, gen_disc_metrics, gan_metrics
