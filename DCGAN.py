@@ -32,7 +32,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # Global Constants
 NOISE = (100,)
 IMAGE_SHAPE = (64,64,3)
-GAN_STEPS = 2000
+GAN_STEPS = 15000
 BATCH_SIZE = 64
 
 
@@ -252,7 +252,7 @@ for step in range(1, GAN_STEPS+1):
     with open('log.csv', 'a') as log:
 #         log.write('%d,%f,%f,%f,%f\n' % (step, disc_metrics[0], disc_metrics[1], gan_metrics[0], gan_metrics[1]))
         log.write('%d,%f,%f,%f,%f,%f,%f\n' % (step, real_disc_metrics[0], real_disc_metrics[1], gen_disc_metrics[0], gen_disc_metrics[1], gan_metrics[0], gan_metrics[1]))
-    if ((step % 50) == 0):
+    if ((step % 100) == 0):
         gan_model.save('./GANModels/GANmodel_'+current_time+'.h5')
         gen_model.trainable = True
         gen_model.save('./GANModels/GENmodel_'+current_time+'.h5')
