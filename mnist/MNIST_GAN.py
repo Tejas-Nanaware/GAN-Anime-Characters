@@ -36,7 +36,7 @@ train_images = (train_images - 127.5) / 127.5
 BUFFER_SIZE = 60000
 BATCH_SIZE = 256
 NOISE = (100,)
-GAN_STEPS = 1000
+GAN_STEPS = 400
 IMAGE_SHAPE = (28, 28, 1)
 
 
@@ -207,7 +207,7 @@ for step in range(1, GAN_STEPS+1):
     print()
     print('**************************************')
     
-    if ((step % 10) == 0):
+    if ((step % 1) == 0):
         gen_noise = np.random.normal(loc=0, scale=1, size=(BATCH_SIZE,)+NOISE)
         created_digits = gen_model.predict(gen_noise)
         save_fig(created_digits, str(step))
@@ -228,7 +228,7 @@ for step in range(1, GAN_STEPS+1):
     # Append Log
     with open('mnist_log.csv', 'a') as log:
         log.write('%d,%f,%f,%f,%f,%f,%f\n' % (step, real_disc_metrics[0], real_disc_metrics[1], gen_disc_metrics[0], gen_disc_metrics[1], gan_metrics[0], gan_metrics[1]))
-    if ((step % 200) == 0):
+    if ((step % 50) == 0):
         gan_model.save('./DigitModels/GANmodel_'+str(step)+'.h5')
         gen_model.trainable = True
         gen_model.save('./DigitModels/GENmodel_'+str(step)+'.h5')
