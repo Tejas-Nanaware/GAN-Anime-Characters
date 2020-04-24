@@ -19,3 +19,6 @@ The best method of evaluating GANs is to visually see the results and notice the
 # Downloads
 The models can be downloaded from the Google Drive [link](https://drive.google.com/file/d/1bsSoo3s3mcA-qNuCrmMROlbHKR5NIVXK/view?usp=sharing).  
   
+# Timelapse
+Here is a timelapse video to see how the generator progresses with number of epochs.  
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3VlGOQoszxs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
