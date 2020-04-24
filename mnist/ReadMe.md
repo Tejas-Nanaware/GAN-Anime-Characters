@@ -21,4 +21,4 @@ The models can be downloaded from the Google Drive [link](https://drive.google.c
   
 # Timelapse
 Here is a timelapse video to see how the generator progresses with number of epochs.  
-<iframe width="560" height="315" src="https://www.youtube.com/embed/3VlGOQoszxs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Timelapse](https://img.youtube.com/vi/3VlGOQoszxs/default.jpg)](https://youtu.be/3VlGOQoszxs)
