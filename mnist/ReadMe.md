@@ -16,3 +16,6 @@ The best method of evaluating GANs is to visually see the results and notice the
 ![Fréchet Inception Distance](https://miro.medium.com/max/1400/1*tJmwViZesuFM89TcVN7J3A.png)  
 `This network obtains a Mean FID Score of 1.52 with Standard Deviation of 0.73.`  
   
+# Downloads
+The models can be downloaded from the Google Drive [link](https://drive.google.com/file/d/1bsSoo3s3mcA-qNuCrmMROlbHKR5NIVXK/view?usp=sharing).  
+  
