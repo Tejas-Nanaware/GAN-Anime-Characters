@@ -89,9 +89,9 @@ def discriminator_model(image_shape=IMAGE_SHAPE):
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
-    discriminator = layers.LeakyReLU()(discriminator)
-    discriminator = layers.Dropout(0.3)(discriminator)
+#     discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
+#     discriminator = layers.LeakyReLU()(discriminator)
+#     discriminator = layers.Dropout(0.3)(discriminator)
     
     discriminator = layers.Flatten()(discriminator)
     discriminator = layers.Dropout(0.4)(discriminator)
