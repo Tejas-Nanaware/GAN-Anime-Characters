@@ -9,6 +9,7 @@ import time
 import glob
 from sklearn.preprocessing import LabelEncoder
 from keras.preprocessing import image
+from keras.utils import plot_model
 from PIL import Image
 from keras import Input
 from keras import layers
@@ -32,7 +33,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 # Global Constants
 NOISE = (100,)
 IMAGE_SHAPE = (64,64,3)
-GAN_STEPS = 15000
+GAN_STEPS = 500
 BATCH_SIZE = 64
 
 
@@ -42,30 +43,33 @@ BATCH_SIZE = 64
 def generator_model(noise=NOISE):
     gen_input = Input(shape=noise)
     
-    generator = layers.Dense(32 * 32 * 128, use_bias=False)(gen_input)
+    generator = layers.Dense(8 * 8 * 256, use_bias=False)(gen_input)
     generator = layers.LeakyReLU()(generator)
-    generator = layers.Reshape((32, 32, 128))(generator)
+    generator = layers.Reshape((8, 8, 256))(generator)
     
-    generator = layers.Conv2D(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-#     generator = layers.BatchNormalization(momentum=0.5)(generator)
-    generator = layers.LeakyReLU()(generator)
-    
-    generator = layers.Conv2DTranspose(filters=256, kernel_size=(4,4), strides=(2,2), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-#     generator = layers.BatchNormalization(momentum=0.5)(generator)
-    generator = layers.LeakyReLU()(generator)
-    
-    generator = layers.Conv2D(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-#     generator = layers.BatchNormalization(momentum=0.5)(generator)
-    generator = layers.LeakyReLU()(generator)
-    
+    generator = layers.UpSampling2D()(generator)
     generator = layers.Conv2DTranspose(filters=256, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
-#     generator = layers.BatchNormalization(momentum=0.5)(generator)
+    generator = layers.BatchNormalization(momentum=0.5)(generator)
+    generator = layers.LeakyReLU()(generator)
+    
+    generator = layers.UpSampling2D()(generator)
+    generator = layers.Conv2DTranspose(filters=128, kernel_size=(4,4), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.BatchNormalization(momentum=0.5)(generator)
+    generator = layers.LeakyReLU()(generator)
+    
+    generator = layers.UpSampling2D()(generator)
+    generator = layers.Conv2D(filters=64, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.BatchNormalization(momentum=0.5)(generator)
+    generator = layers.LeakyReLU()(generator)
+    
+    generator = layers.Conv2DTranspose(filters=64, kernel_size=(5,5), strides=(1,1), use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
+    generator = layers.BatchNormalization(momentum=0.5)(generator)
     generator = layers.LeakyReLU()(generator)
         
     generator = layers.Conv2DTranspose(filters=3, kernel_size=(7,7), strides=(1,1), activation='tanh', use_bias=False, padding='same', kernel_initializer='glorot_uniform')(generator)
     
     model = Model(inputs=gen_input, outputs=generator)
-#     model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
@@ -76,28 +80,28 @@ def generator_model(noise=NOISE):
 def discriminator_model(image_shape=IMAGE_SHAPE):
     disc_input = Input(shape=image_shape)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(3,3), padding='same', strides=(1,1), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
+    discriminator = layers.Conv2D(filters=64, kernel_size=(3,3), padding='same', strides=(1,1), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
+    discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
+    discriminator = layers.Conv2D(filters=256, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
-    discriminator = layers.Conv2D(filters=128, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(disc_input)
+    discriminator = layers.Conv2D(filters=256, kernel_size=(4,4), padding='same', strides=(2,2), kernel_initializer='glorot_uniform', kernel_regularizer=l2(1e-3))(discriminator)
     discriminator = layers.LeakyReLU()(discriminator)
     discriminator = layers.Dropout(0.3)(discriminator)
     
     discriminator = layers.Flatten()(discriminator)
-    discriminator = layers.Dropout(0.4)(discriminator)
+#     discriminator = layers.Dropout(0.4)(discriminator)
     discriminator = layers.Dense(1, activation='sigmoid')(discriminator)
     
     model = Model(inputs=disc_input, outputs=discriminator)
-    model.compile(optimizer=RMSprop(lr=0.0008, clipvalue=1.0, decay=1e-8), loss=losses.binary_crossentropy, metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=1e-3), loss=losses.binary_crossentropy, metrics=['accuracy'])
     
     return model
 
@@ -125,9 +129,13 @@ gan_gen = gen_model(gan_gen_input)
 gan_dis = disc_model(gan_gen)
 
 gan_model = Model(inputs=gan_gen_input, outputs=gan_dis)
-gan_model.compile(optimizer=RMSprop(lr=0.0002, clipvalue=1.0, decay=1e-8), loss=losses.binary_crossentropy, metrics=['accuracy'])
+gan_model.compile(optimizer=Adam(lr=1e-4), loss=losses.binary_crossentropy, metrics=['accuracy'])
 gan_model.summary()
 
+
+# plot_model(gen_model, to_file='./PlotsAndImages/gen_model_plot.png', show_shapes=True, show_layer_names=True)
+# plot_model(disc_model, to_file='./PlotsAndImages/disc_model_plot.png', show_shapes=True, show_layer_names=True)
+# plot_model(gan_model, to_file='./PlotsAndImages/gan_model_plot.png', show_shapes=True, show_layer_names=True)
 
 # In[8]:
 
