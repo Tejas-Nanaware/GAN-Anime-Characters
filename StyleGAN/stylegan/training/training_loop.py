@@ -109,6 +109,18 @@ def training_schedule(
 #----------------------------------------------------------------------------
 # Main training script.
 
+'''
+**Modify here as per requirements**
+Especially look for
+G_smoothing_kimg: The half life
+D_repeats: Times discriminator is trained
+These two affect the generator and discriminator and therefore the training
+
+For saving frequency, change
+network_snapshot_ticks
+
+To resume training, change resume_run_id to "latest" and change resume_kimg
+'''
 def training_loop(
     submit_config,
     G_args                  = {},       # Options for generator network.
