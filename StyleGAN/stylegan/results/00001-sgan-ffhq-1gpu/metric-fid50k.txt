@@ -1,0 +1,8 @@
+network-snapshot-000680        time 5m 03s       fid50k 411.1517  
+network-snapshot-000800        time 5m 04s       fid50k 370.0680  
+network-snapshot-000920        time 5m 05s       fid50k 320.5581  
+network-snapshot-001040        time 5m 05s       fid50k 309.3924  
+network-snapshot-001160        time 5m 05s       fid50k 307.2980  
+network-snapshot-001280        time 5m 06s       fid50k 306.6359  
+network-snapshot-001400        time 5m 06s       fid50k 305.5245  
+network-snapshot-001520        time 5m 05s       fid50k 302.5383  

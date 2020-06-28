@@ -1,0 +1,307 @@
+dnnlib: Running training.training_loop.training_loop() on localhost...
+Streaming data using training.dataset.TFRecordDataset...
+Dataset shape = [3, 512, 512]
+Dynamic range = [0, 255]
+Label size    = 0
+Constructing networks...
+
+G                             Params    OutputShape         WeightShape     
+---                           ---       ---                 ---             
+latents_in                    -         (?, 512)            -               
+labels_in                     -         (?, 0)              -               
+lod                           -         ()                  -               
+dlatent_avg                   -         (512,)              -               
+G_mapping/latents_in          -         (?, 512)            -               
+G_mapping/labels_in           -         (?, 0)              -               
+G_mapping/PixelNorm           -         (?, 512)            -               
+G_mapping/Dense0              262656    (?, 512)            (512, 512)      
+G_mapping/Dense1              262656    (?, 512)            (512, 512)      
+G_mapping/Dense2              262656    (?, 512)            (512, 512)      
+G_mapping/Dense3              262656    (?, 512)            (512, 512)      
+G_mapping/Dense4              262656    (?, 512)            (512, 512)      
+G_mapping/Dense5              262656    (?, 512)            (512, 512)      
+G_mapping/Dense6              262656    (?, 512)            (512, 512)      
+G_mapping/Dense7              262656    (?, 512)            (512, 512)      
+G_mapping/Broadcast           -         (?, 16, 512)        -               
+G_mapping/dlatents_out        -         (?, 16, 512)        -               
+Truncation                    -         (?, 16, 512)        -               
+G_synthesis/dlatents_in       -         (?, 16, 512)        -               
+G_synthesis/4x4/Const         534528    (?, 512, 4, 4)      (512,)          
+G_synthesis/4x4/Conv          2885632   (?, 512, 4, 4)      (3, 3, 512, 512)
+G_synthesis/ToRGB_lod7        1539      (?, 3, 4, 4)        (1, 1, 512, 3)  
+G_synthesis/8x8/Conv0_up      2885632   (?, 512, 8, 8)      (3, 3, 512, 512)
+G_synthesis/8x8/Conv1         2885632   (?, 512, 8, 8)      (3, 3, 512, 512)
+G_synthesis/ToRGB_lod6        1539      (?, 3, 8, 8)        (1, 1, 512, 3)  
+G_synthesis/Upscale2D         -         (?, 3, 8, 8)        -               
+G_synthesis/Grow_lod6         -         (?, 3, 8, 8)        -               
+G_synthesis/16x16/Conv0_up    2885632   (?, 512, 16, 16)    (3, 3, 512, 512)
+G_synthesis/16x16/Conv1       2885632   (?, 512, 16, 16)    (3, 3, 512, 512)
+G_synthesis/ToRGB_lod5        1539      (?, 3, 16, 16)      (1, 1, 512, 3)  
+G_synthesis/Upscale2D_1       -         (?, 3, 16, 16)      -               
+G_synthesis/Grow_lod5         -         (?, 3, 16, 16)      -               
+G_synthesis/32x32/Conv0_up    2885632   (?, 512, 32, 32)    (3, 3, 512, 512)
+G_synthesis/32x32/Conv1       2885632   (?, 512, 32, 32)    (3, 3, 512, 512)
+G_synthesis/ToRGB_lod4        1539      (?, 3, 32, 32)      (1, 1, 512, 3)  
+G_synthesis/Upscale2D_2       -         (?, 3, 32, 32)      -               
+G_synthesis/Grow_lod4         -         (?, 3, 32, 32)      -               
+G_synthesis/64x64/Conv0_up    1442816   (?, 256, 64, 64)    (3, 3, 512, 256)
+G_synthesis/64x64/Conv1       852992    (?, 256, 64, 64)    (3, 3, 256, 256)
+G_synthesis/ToRGB_lod3        771       (?, 3, 64, 64)      (1, 1, 256, 3)  
+G_synthesis/Upscale2D_3       -         (?, 3, 64, 64)      -               
+G_synthesis/Grow_lod3         -         (?, 3, 64, 64)      -               
+G_synthesis/128x128/Conv0_up  426496    (?, 128, 128, 128)  (3, 3, 256, 128)
+G_synthesis/128x128/Conv1     279040    (?, 128, 128, 128)  (3, 3, 128, 128)
+G_synthesis/ToRGB_lod2        387       (?, 3, 128, 128)    (1, 1, 128, 3)  
+G_synthesis/Upscale2D_4       -         (?, 3, 128, 128)    -               
+G_synthesis/Grow_lod2         -         (?, 3, 128, 128)    -               
+G_synthesis/256x256/Conv0_up  139520    (?, 64, 256, 256)   (3, 3, 128, 64) 
+G_synthesis/256x256/Conv1     102656    (?, 64, 256, 256)   (3, 3, 64, 64)  
+G_synthesis/ToRGB_lod1        195       (?, 3, 256, 256)    (1, 1, 64, 3)   
+G_synthesis/Upscale2D_5       -         (?, 3, 256, 256)    -               
+G_synthesis/Grow_lod1         -         (?, 3, 256, 256)    -               
+G_synthesis/512x512/Conv0_up  51328     (?, 32, 512, 512)   (3, 3, 64, 32)  
+G_synthesis/512x512/Conv1     42112     (?, 32, 512, 512)   (3, 3, 32, 32)  
+G_synthesis/ToRGB_lod0        99        (?, 3, 512, 512)    (1, 1, 32, 3)   
+G_synthesis/Upscale2D_6       -         (?, 3, 512, 512)    -               
+G_synthesis/Grow_lod0         -         (?, 3, 512, 512)    -               
+G_synthesis/images_out        -         (?, 3, 512, 512)    -               
+G_synthesis/lod               -         ()                  -               
+G_synthesis/noise0            -         (1, 1, 4, 4)        -               
+G_synthesis/noise1            -         (1, 1, 4, 4)        -               
+G_synthesis/noise2            -         (1, 1, 8, 8)        -               
+G_synthesis/noise3            -         (1, 1, 8, 8)        -               
+G_synthesis/noise4            -         (1, 1, 16, 16)      -               
+G_synthesis/noise5            -         (1, 1, 16, 16)      -               
+G_synthesis/noise6            -         (1, 1, 32, 32)      -               
+G_synthesis/noise7            -         (1, 1, 32, 32)      -               
+G_synthesis/noise8            -         (1, 1, 64, 64)      -               
+G_synthesis/noise9            -         (1, 1, 64, 64)      -               
+G_synthesis/noise10           -         (1, 1, 128, 128)    -               
+G_synthesis/noise11           -         (1, 1, 128, 128)    -               
+G_synthesis/noise12           -         (1, 1, 256, 256)    -               
+G_synthesis/noise13           -         (1, 1, 256, 256)    -               
+G_synthesis/noise14           -         (1, 1, 512, 512)    -               
+G_synthesis/noise15           -         (1, 1, 512, 512)    -               
+images_out                    -         (?, 3, 512, 512)    -               
+---                           ---       ---                 ---             
+Total                         26179768                                      
+
+
+D                    Params    OutputShape         WeightShape     
+---                  ---       ---                 ---             
+images_in            -         (?, 3, 512, 512)    -               
+labels_in            -         (?, 0)              -               
+lod                  -         ()                  -               
+FromRGB_lod0         128       (?, 32, 512, 512)   (1, 1, 3, 32)   
+512x512/Conv0        9248      (?, 32, 512, 512)   (3, 3, 32, 32)  
+512x512/Conv1_down   18496     (?, 64, 256, 256)   (3, 3, 32, 64)  
+Downscale2D          -         (?, 3, 256, 256)    -               
+FromRGB_lod1         256       (?, 64, 256, 256)   (1, 1, 3, 64)   
+Grow_lod0            -         (?, 64, 256, 256)   -               
+256x256/Conv0        36928     (?, 64, 256, 256)   (3, 3, 64, 64)  
+256x256/Conv1_down   73856     (?, 128, 128, 128)  (3, 3, 64, 128) 
+Downscale2D_1        -         (?, 3, 128, 128)    -               
+FromRGB_lod2         512       (?, 128, 128, 128)  (1, 1, 3, 128)  
+Grow_lod1            -         (?, 128, 128, 128)  -               
+128x128/Conv0        147584    (?, 128, 128, 128)  (3, 3, 128, 128)
+128x128/Conv1_down   295168    (?, 256, 64, 64)    (3, 3, 128, 256)
+Downscale2D_2        -         (?, 3, 64, 64)      -               
+FromRGB_lod3         1024      (?, 256, 64, 64)    (1, 1, 3, 256)  
+Grow_lod2            -         (?, 256, 64, 64)    -               
+64x64/Conv0          590080    (?, 256, 64, 64)    (3, 3, 256, 256)
+64x64/Conv1_down     1180160   (?, 512, 32, 32)    (3, 3, 256, 512)
+Downscale2D_3        -         (?, 3, 32, 32)      -               
+FromRGB_lod4         2048      (?, 512, 32, 32)    (1, 1, 3, 512)  
+Grow_lod3            -         (?, 512, 32, 32)    -               
+32x32/Conv0          2359808   (?, 512, 32, 32)    (3, 3, 512, 512)
+32x32/Conv1_down     2359808   (?, 512, 16, 16)    (3, 3, 512, 512)
+Downscale2D_4        -         (?, 3, 16, 16)      -               
+FromRGB_lod5         2048      (?, 512, 16, 16)    (1, 1, 3, 512)  
+Grow_lod4            -         (?, 512, 16, 16)    -               
+16x16/Conv0          2359808   (?, 512, 16, 16)    (3, 3, 512, 512)
+16x16/Conv1_down     2359808   (?, 512, 8, 8)      (3, 3, 512, 512)
+Downscale2D_5        -         (?, 3, 8, 8)        -               
+FromRGB_lod6         2048      (?, 512, 8, 8)      (1, 1, 3, 512)  
+Grow_lod5            -         (?, 512, 8, 8)      -               
+8x8/Conv0            2359808   (?, 512, 8, 8)      (3, 3, 512, 512)
+8x8/Conv1_down       2359808   (?, 512, 4, 4)      (3, 3, 512, 512)
+Downscale2D_6        -         (?, 3, 4, 4)        -               
+FromRGB_lod7         2048      (?, 512, 4, 4)      (1, 1, 3, 512)  
+Grow_lod6            -         (?, 512, 4, 4)      -               
+4x4/MinibatchStddev  -         (?, 513, 4, 4)      -               
+4x4/Conv             2364416   (?, 512, 4, 4)      (3, 3, 513, 512)
+4x4/Dense0           4194816   (?, 512)            (8192, 512)     
+4x4/Dense1           513       (?, 1)              (512, 1)        
+scores_out           -         (?, 1)              -               
+---                  ---       ---                 ---             
+Total                23080225                                      
+
+Building TensorFlow graph...
+Setting up snapshot image grid...
+Setting up run dir...
+Training...
+
+tick 1     kimg 140.0    lod 6.00  minibatch 128  time 4m 59s       sec/tick 245.9   sec/kimg 1.76    maintenance 53.6   gpumem 3.8 
+network-snapshot-000140        time 4m 40s       fid50k 410.8370  
+tick 2     kimg 280.1    lod 6.00  minibatch 128  time 13m 48s      sec/tick 235.3   sec/kimg 1.68    maintenance 293.6  gpumem 3.8 
+network-snapshot-000280        time 4m 41s       fid50k 417.1863  
+tick 3     kimg 420.1    lod 6.00  minibatch 128  time 22m 27s      sec/tick 235.6   sec/kimg 1.68    maintenance 282.8  gpumem 3.8 
+network-snapshot-000420        time 4m 41s       fid50k 421.0755  
+tick 4     kimg 560.1    lod 6.00  minibatch 128  time 31m 05s      sec/tick 235.5   sec/kimg 1.68    maintenance 282.7  gpumem 3.8 
+network-snapshot-000560        time 4m 41s       fid50k 423.6623  
+Traceback (most recent call last):
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\client\session.py", line 1356, in _do_call
+    return fn(*args)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\client\session.py", line 1341, in _run_fn
+    options, feed_dict, fetch_list, target_list, run_metadata)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\client\session.py", line 1429, in _call_tf_sessionrun
+    run_metadata)
+tensorflow.python.framework.errors_impl.ResourceExhaustedError: 2 root error(s) found.
+  (0) Resource exhausted: OOM when allocating tensor with shape[128,3,16,32,16,32] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[{{node GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Tile}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+	 [[TrainD/ApplyGrads0/UpdateWeights/cond/pred_id/_1585]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+  (1) Resource exhausted: OOM when allocating tensor with shape[128,3,16,32,16,32] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[{{node GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Tile}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+0 successful operations.
+0 derived errors ignored.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "train.py", line 190, in <module>
+    main()
+  File "train.py", line 185, in main
+    dnnlib.submit_run(**kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\submission\submit.py", line 290, in submit_run
+    run_wrapper(submit_config)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\submission\submit.py", line 242, in run_wrapper
+    util.call_func_by_name(func_name=submit_config.run_func_name, submit_config=submit_config, **submit_config.run_func_kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\util.py", line 257, in call_func_by_name
+    return func_obj(*args, **kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\training_loop.py", line 242, in training_loop
+    tflib.run([D_train_op, Gs_update_op], {lod_in: sched.lod, lrate_in: sched.D_lrate, minibatch_in: sched.minibatch})
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\tflib\tfutil.py", line 26, in run
+    return tf.get_default_session().run(*args, **kwargs)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\client\session.py", line 950, in run
+    run_metadata_ptr)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\client\session.py", line 1173, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\client\session.py", line 1350, in _do_run
+    run_metadata)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\client\session.py", line 1370, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.ResourceExhaustedError: 2 root error(s) found.
+  (0) Resource exhausted: OOM when allocating tensor with shape[128,3,16,32,16,32] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[node GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Tile (defined at C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py:66) ]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+	 [[TrainD/ApplyGrads0/UpdateWeights/cond/pred_id/_1585]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+  (1) Resource exhausted: OOM when allocating tensor with shape[128,3,16,32,16,32] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[node GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Tile (defined at C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py:66) ]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+0 successful operations.
+0 derived errors ignored.
+
+Errors may have originated from an input operation.
+Input Source operations connected to node GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Tile:
+ GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Reshape (defined at C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py:65)
+
+Input Source operations connected to node GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Tile:
+ GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Reshape (defined at C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py:65)
+
+Original stack trace for 'GPU0/D_loss/R1Penalty/gradients/GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN_grad/Tile':
+  File "train.py", line 190, in <module>
+    main()
+  File "train.py", line 185, in main
+    dnnlib.submit_run(**kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\submission\submit.py", line 290, in submit_run
+    run_wrapper(submit_config)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\submission\submit.py", line 242, in run_wrapper
+    util.call_func_by_name(func_name=submit_config.run_func_name, submit_config=submit_config, **submit_config.run_func_kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\util.py", line 257, in call_func_by_name
+    return func_obj(*args, **kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\training_loop.py", line 193, in training_loop
+    D_loss = dnnlib.util.call_func_by_name(G=G_gpu, D=D_gpu, opt=D_opt, training_set=training_set, minibatch_size=minibatch_split, reals=reals, labels=labels, **D_loss_args)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\util.py", line 257, in call_func_by_name
+    return func_obj(*args, **kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\loss.py", line 163, in D_logistic_simplegp
+    real_grads = opt.undo_loss_scaling(fp32(tf.gradients(real_loss, [reals])[0]))
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\gradients_impl.py", line 158, in gradients
+    unconnected_gradients)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\gradients_util.py", line 731, in _GradientsHelper
+    lambda: grad_fn(op, *out_grads))
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\gradients_util.py", line 403, in _MaybeCompile
+    return grad_fn()  # Exit early
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\gradients_util.py", line 731, in <lambda>
+    lambda: grad_fn(op, *out_grads))
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\custom_gradient.py", line 236, in internal_grad_fn
+    return tape_grad_fn(*result_grads)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\custom_gradient.py", line 224, in tape_grad_fn
+    input_grads = grad_fn(*result_grads)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\custom_gradient.py", line 162, in decorated
+    return _graph_mode_decorator(f, *args, **kwargs)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\custom_gradient.py", line 183, in _graph_mode_decorator
+    result, grad_fn = f(*args)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 127, in grad
+    dx = _upscale2d(dy, factor, gain=1/factor**2)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 66, in _upscale2d
+    x = tf.tile(x, [1, 1, 1, factor, 1, factor])
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\gen_array_ops.py", line 10903, in tile
+    "Tile", input=input, multiples=multiples, name=name)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\framework\op_def_library.py", line 788, in _apply_op_helper
+    op_def=op_def)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\util\deprecation.py", line 507, in new_func
+    return func(*args, **kwargs)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\framework\ops.py", line 3616, in create_op
+    op_def=op_def)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\framework\ops.py", line 2005, in __init__
+    self._traceback = tf_stack.extract_stack()
+
+...which was originally created as op 'GPU0/D_loss/D/cond/cond/cond/Downscale2D/IdentityN', defined at:
+  File "train.py", line 190, in <module>
+    main()
+[elided 5 identical lines from previous traceback]
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\util.py", line 257, in call_func_by_name
+    return func_obj(*args, **kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\loss.py", line 153, in D_logistic_simplegp
+    real_scores_out = fp32(D.get_output_for(reals, labels, is_training=True))
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\dnnlib\tflib\network.py", line 222, in get_output_for
+    out_expr = self._build_func(*final_inputs, **build_kwargs)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 650, in D_basic
+    scores_out = grow(2, resolution_log2 - 2)
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 647, in grow
+    x = block(x(), res); y = lambda: x
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 643, in <lambda>
+    return lambda: tf.cond(new_cond, new_lambda, cur_lambda)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\util\deprecation.py", line 507, in new_func
+    return func(*args, **kwargs)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\control_flow_ops.py", line 1977, in cond
+    orig_res_t, res_t = context_t.BuildCondBranch(true_fn)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\control_flow_ops.py", line 1814, in BuildCondBranch
+    original_result = fn()
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 646, in <lambda>
+    if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 647, in grow
+    x = block(x(), res); y = lambda: x
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 643, in <lambda>
+    return lambda: tf.cond(new_cond, new_lambda, cur_lambda)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\util\deprecation.py", line 507, in new_func
+    return func(*args, **kwargs)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\control_flow_ops.py", line 1977, in cond
+    orig_res_t, res_t = context_t.BuildCondBranch(true_fn)
+  File "C:\Users\jmohd\anaconda3\lib\site-packages\tensorflow\python\ops\control_flow_ops.py", line 1814, in BuildCondBranch
+    original_result = fn()
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 646, in <lambda>
+    if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
+  File "C:\Users\jmohd\Desktop\Tejas\GAN-Anime-Characters\StyleGAN\stylegan\training\networks_stylegan.py", line 647, in grow
+    x = block(x(), res); y = lambda: x
+

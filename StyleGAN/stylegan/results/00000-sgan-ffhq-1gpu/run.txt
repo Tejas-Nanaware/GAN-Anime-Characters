@@ -1,0 +1,1 @@
+{'host_name': 'localhost', 'start_time': '2020-06-27 05:55:54.289019', 'task_name': 'jmohd-00000-sgan-ffhq-1gpu'}

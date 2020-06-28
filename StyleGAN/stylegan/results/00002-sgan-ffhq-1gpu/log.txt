@@ -1,0 +1,219 @@
+dnnlib: Running training.training_loop.training_loop() on localhost...
+Streaming data using training.dataset.TFRecordDataset...
+Dataset shape = [3, 512, 512]
+Dynamic range = [0, 255]
+Label size    = 0
+Loading networks from "results\00000-sgan-ffhq-1gpu\network-snapshot-000560.pkl"...
+
+G                             Params    OutputShape         WeightShape     
+---                           ---       ---                 ---             
+latents_in                    -         (?, 512)            -               
+labels_in                     -         (?, 0)              -               
+lod                           -         ()                  -               
+dlatent_avg                   -         (512,)              -               
+G_mapping/latents_in          -         (?, 512)            -               
+G_mapping/labels_in           -         (?, 0)              -               
+G_mapping/PixelNorm           -         (?, 512)            -               
+G_mapping/Dense0              262656    (?, 512)            (512, 512)      
+G_mapping/Dense1              262656    (?, 512)            (512, 512)      
+G_mapping/Dense2              262656    (?, 512)            (512, 512)      
+G_mapping/Dense3              262656    (?, 512)            (512, 512)      
+G_mapping/Dense4              262656    (?, 512)            (512, 512)      
+G_mapping/Dense5              262656    (?, 512)            (512, 512)      
+G_mapping/Dense6              262656    (?, 512)            (512, 512)      
+G_mapping/Dense7              262656    (?, 512)            (512, 512)      
+G_mapping/Broadcast           -         (?, 16, 512)        -               
+G_mapping/dlatents_out        -         (?, 16, 512)        -               
+Truncation                    -         (?, 16, 512)        -               
+G_synthesis/dlatents_in       -         (?, 16, 512)        -               
+G_synthesis/4x4/Const         534528    (?, 512, 4, 4)      (512,)          
+G_synthesis/4x4/Conv          2885632   (?, 512, 4, 4)      (3, 3, 512, 512)
+G_synthesis/ToRGB_lod7        1539      (?, 3, 4, 4)        (1, 1, 512, 3)  
+G_synthesis/8x8/Conv0_up      2885632   (?, 512, 8, 8)      (3, 3, 512, 512)
+G_synthesis/8x8/Conv1         2885632   (?, 512, 8, 8)      (3, 3, 512, 512)
+G_synthesis/ToRGB_lod6        1539      (?, 3, 8, 8)        (1, 1, 512, 3)  
+G_synthesis/Upscale2D         -         (?, 3, 8, 8)        -               
+G_synthesis/Grow_lod6         -         (?, 3, 8, 8)        -               
+G_synthesis/16x16/Conv0_up    2885632   (?, 512, 16, 16)    (3, 3, 512, 512)
+G_synthesis/16x16/Conv1       2885632   (?, 512, 16, 16)    (3, 3, 512, 512)
+G_synthesis/ToRGB_lod5        1539      (?, 3, 16, 16)      (1, 1, 512, 3)  
+G_synthesis/Upscale2D_1       -         (?, 3, 16, 16)      -               
+G_synthesis/Grow_lod5         -         (?, 3, 16, 16)      -               
+G_synthesis/32x32/Conv0_up    2885632   (?, 512, 32, 32)    (3, 3, 512, 512)
+G_synthesis/32x32/Conv1       2885632   (?, 512, 32, 32)    (3, 3, 512, 512)
+G_synthesis/ToRGB_lod4        1539      (?, 3, 32, 32)      (1, 1, 512, 3)  
+G_synthesis/Upscale2D_2       -         (?, 3, 32, 32)      -               
+G_synthesis/Grow_lod4         -         (?, 3, 32, 32)      -               
+G_synthesis/64x64/Conv0_up    1442816   (?, 256, 64, 64)    (3, 3, 512, 256)
+G_synthesis/64x64/Conv1       852992    (?, 256, 64, 64)    (3, 3, 256, 256)
+G_synthesis/ToRGB_lod3        771       (?, 3, 64, 64)      (1, 1, 256, 3)  
+G_synthesis/Upscale2D_3       -         (?, 3, 64, 64)      -               
+G_synthesis/Grow_lod3         -         (?, 3, 64, 64)      -               
+G_synthesis/128x128/Conv0_up  426496    (?, 128, 128, 128)  (3, 3, 256, 128)
+G_synthesis/128x128/Conv1     279040    (?, 128, 128, 128)  (3, 3, 128, 128)
+G_synthesis/ToRGB_lod2        387       (?, 3, 128, 128)    (1, 1, 128, 3)  
+G_synthesis/Upscale2D_4       -         (?, 3, 128, 128)    -               
+G_synthesis/Grow_lod2         -         (?, 3, 128, 128)    -               
+G_synthesis/256x256/Conv0_up  139520    (?, 64, 256, 256)   (3, 3, 128, 64) 
+G_synthesis/256x256/Conv1     102656    (?, 64, 256, 256)   (3, 3, 64, 64)  
+G_synthesis/ToRGB_lod1        195       (?, 3, 256, 256)    (1, 1, 64, 3)   
+G_synthesis/Upscale2D_5       -         (?, 3, 256, 256)    -               
+G_synthesis/Grow_lod1         -         (?, 3, 256, 256)    -               
+G_synthesis/512x512/Conv0_up  51328     (?, 32, 512, 512)   (3, 3, 64, 32)  
+G_synthesis/512x512/Conv1     42112     (?, 32, 512, 512)   (3, 3, 32, 32)  
+G_synthesis/ToRGB_lod0        99        (?, 3, 512, 512)    (1, 1, 32, 3)   
+G_synthesis/Upscale2D_6       -         (?, 3, 512, 512)    -               
+G_synthesis/Grow_lod0         -         (?, 3, 512, 512)    -               
+G_synthesis/images_out        -         (?, 3, 512, 512)    -               
+G_synthesis/lod               -         ()                  -               
+G_synthesis/noise0            -         (1, 1, 4, 4)        -               
+G_synthesis/noise1            -         (1, 1, 4, 4)        -               
+G_synthesis/noise2            -         (1, 1, 8, 8)        -               
+G_synthesis/noise3            -         (1, 1, 8, 8)        -               
+G_synthesis/noise4            -         (1, 1, 16, 16)      -               
+G_synthesis/noise5            -         (1, 1, 16, 16)      -               
+G_synthesis/noise6            -         (1, 1, 32, 32)      -               
+G_synthesis/noise7            -         (1, 1, 32, 32)      -               
+G_synthesis/noise8            -         (1, 1, 64, 64)      -               
+G_synthesis/noise9            -         (1, 1, 64, 64)      -               
+G_synthesis/noise10           -         (1, 1, 128, 128)    -               
+G_synthesis/noise11           -         (1, 1, 128, 128)    -               
+G_synthesis/noise12           -         (1, 1, 256, 256)    -               
+G_synthesis/noise13           -         (1, 1, 256, 256)    -               
+G_synthesis/noise14           -         (1, 1, 512, 512)    -               
+G_synthesis/noise15           -         (1, 1, 512, 512)    -               
+images_out                    -         (?, 3, 512, 512)    -               
+---                           ---       ---                 ---             
+Total                         26179768                                      
+
+
+D                    Params    OutputShape         WeightShape     
+---                  ---       ---                 ---             
+images_in            -         (?, 3, 512, 512)    -               
+labels_in            -         (?, 0)              -               
+lod                  -         ()                  -               
+FromRGB_lod0         128       (?, 32, 512, 512)   (1, 1, 3, 32)   
+512x512/Conv0        9248      (?, 32, 512, 512)   (3, 3, 32, 32)  
+512x512/Conv1_down   18496     (?, 64, 256, 256)   (3, 3, 32, 64)  
+Downscale2D          -         (?, 3, 256, 256)    -               
+FromRGB_lod1         256       (?, 64, 256, 256)   (1, 1, 3, 64)   
+Grow_lod0            -         (?, 64, 256, 256)   -               
+256x256/Conv0        36928     (?, 64, 256, 256)   (3, 3, 64, 64)  
+256x256/Conv1_down   73856     (?, 128, 128, 128)  (3, 3, 64, 128) 
+Downscale2D_1        -         (?, 3, 128, 128)    -               
+FromRGB_lod2         512       (?, 128, 128, 128)  (1, 1, 3, 128)  
+Grow_lod1            -         (?, 128, 128, 128)  -               
+128x128/Conv0        147584    (?, 128, 128, 128)  (3, 3, 128, 128)
+128x128/Conv1_down   295168    (?, 256, 64, 64)    (3, 3, 128, 256)
+Downscale2D_2        -         (?, 3, 64, 64)      -               
+FromRGB_lod3         1024      (?, 256, 64, 64)    (1, 1, 3, 256)  
+Grow_lod2            -         (?, 256, 64, 64)    -               
+64x64/Conv0          590080    (?, 256, 64, 64)    (3, 3, 256, 256)
+64x64/Conv1_down     1180160   (?, 512, 32, 32)    (3, 3, 256, 512)
+Downscale2D_3        -         (?, 3, 32, 32)      -               
+FromRGB_lod4         2048      (?, 512, 32, 32)    (1, 1, 3, 512)  
+Grow_lod3            -         (?, 512, 32, 32)    -               
+32x32/Conv0          2359808   (?, 512, 32, 32)    (3, 3, 512, 512)
+32x32/Conv1_down     2359808   (?, 512, 16, 16)    (3, 3, 512, 512)
+Downscale2D_4        -         (?, 3, 16, 16)      -               
+FromRGB_lod5         2048      (?, 512, 16, 16)    (1, 1, 3, 512)  
+Grow_lod4            -         (?, 512, 16, 16)    -               
+16x16/Conv0          2359808   (?, 512, 16, 16)    (3, 3, 512, 512)
+16x16/Conv1_down     2359808   (?, 512, 8, 8)      (3, 3, 512, 512)
+Downscale2D_5        -         (?, 3, 8, 8)        -               
+FromRGB_lod6         2048      (?, 512, 8, 8)      (1, 1, 3, 512)  
+Grow_lod5            -         (?, 512, 8, 8)      -               
+8x8/Conv0            2359808   (?, 512, 8, 8)      (3, 3, 512, 512)
+8x8/Conv1_down       2359808   (?, 512, 4, 4)      (3, 3, 512, 512)
+Downscale2D_6        -         (?, 3, 4, 4)        -               
+FromRGB_lod7         2048      (?, 512, 4, 4)      (1, 1, 3, 512)  
+Grow_lod6            -         (?, 512, 4, 4)      -               
+4x4/MinibatchStddev  -         (?, 513, 4, 4)      -               
+4x4/Conv             2364416   (?, 512, 4, 4)      (3, 3, 513, 512)
+4x4/Dense0           4194816   (?, 512)            (8192, 512)     
+4x4/Dense1           513       (?, 1)              (512, 1)        
+scores_out           -         (?, 1)              -               
+---                  ---       ---                 ---             
+Total                23080225                                      
+
+Building TensorFlow graph...
+Setting up snapshot image grid...
+Setting up run dir...
+Training...
+
+tick 1     kimg 680.2    lod 5.87  minibatch 128  time 8m 04s       sec/tick 432.4   sec/kimg 3.60    maintenance 51.7   gpumem 5.2 
+network-snapshot-000680        time 5m 01s       fid50k 413.4988  
+tick 2     kimg 800.2    lod 5.67  minibatch 128  time 22m 11s      sec/tick 531.9   sec/kimg 4.43    maintenance 314.7  gpumem 5.2 
+network-snapshot-000800        time 5m 01s       fid50k 377.0481  
+tick 3     kimg 920.3    lod 5.47  minibatch 128  time 36m 05s      sec/tick 532.0   sec/kimg 4.43    maintenance 302.6  gpumem 5.2 
+network-snapshot-000920        time 5m 01s       fid50k 334.7229  
+tick 4     kimg 1040.4   lod 5.27  minibatch 128  time 49m 59s      sec/tick 531.5   sec/kimg 4.43    maintenance 302.6  gpumem 5.2 
+network-snapshot-001040        time 5m 00s       fid50k 308.1424  
+tick 5     kimg 1160.4   lod 5.07  minibatch 128  time 1h 03m 52s   sec/tick 530.5   sec/kimg 4.42    maintenance 302.1  gpumem 5.2 
+network-snapshot-001160        time 4m 58s       fid50k 308.9601  
+tick 6     kimg 1280.5   lod 5.00  minibatch 128  time 1h 17m 31s   sec/tick 519.4   sec/kimg 4.33    maintenance 299.5  gpumem 5.2 
+network-snapshot-001280        time 4m 59s       fid50k 307.4979  
+tick 7     kimg 1400.5   lod 5.00  minibatch 128  time 1h 31m 06s   sec/tick 514.0   sec/kimg 4.28    maintenance 300.9  gpumem 5.2 
+network-snapshot-001400        time 4m 58s       fid50k 305.2999  
+tick 8     kimg 1520.6   lod 5.00  minibatch 128  time 1h 44m 39s   sec/tick 513.7   sec/kimg 4.28    maintenance 299.7  gpumem 5.2 
+network-snapshot-001520        time 5m 00s       fid50k 303.1676  
+tick 9     kimg 1640.7   lod 5.00  minibatch 128  time 1h 58m 15s   sec/tick 514.3   sec/kimg 4.28    maintenance 301.6  gpumem 5.2 
+network-snapshot-001640        time 4m 59s       fid50k 301.7332  
+tick 10    kimg 1760.7   lod 5.00  minibatch 128  time 2h 11m 51s   sec/tick 514.3   sec/kimg 4.28    maintenance 301.1  gpumem 5.2 
+network-snapshot-001760        time 5m 00s       fid50k 300.1101  
+tick 11    kimg 1860.8   lod 4.90  minibatch 64   time 2h 35m 03s   sec/tick 1090.0  sec/kimg 10.90   maintenance 302.0  gpumem 5.4 
+network-snapshot-001860        time 6m 11s       fid50k 349.1246  
+tick 12    kimg 1960.8   lod 4.73  minibatch 64   time 3h 06m 23s   sec/tick 1507.6  sec/kimg 15.07   maintenance 372.9  gpumem 5.4 
+network-snapshot-001960        time 6m 12s       fid50k 342.1241  
+tick 13    kimg 2060.8   lod 4.57  minibatch 64   time 3h 37m 47s   sec/tick 1509.6  sec/kimg 15.09   maintenance 374.4  gpumem 5.4 
+network-snapshot-002060        time 6m 13s       fid50k 314.2971  
+tick 14    kimg 2160.9   lod 4.40  minibatch 64   time 4h 09m 13s   sec/tick 1510.1  sec/kimg 15.10   maintenance 375.5  gpumem 5.4 
+network-snapshot-002160        time 6m 12s       fid50k 295.2275  
+tick 15    kimg 2260.9   lod 4.23  minibatch 64   time 4h 40m 38s   sec/tick 1511.3  sec/kimg 15.11   maintenance 373.6  gpumem 5.4 
+network-snapshot-002260        time 6m 12s       fid50k 287.0067  
+tick 16    kimg 2360.9   lod 4.07  minibatch 64   time 5h 12m 02s   sec/tick 1510.4  sec/kimg 15.10   maintenance 374.3  gpumem 5.4 
+network-snapshot-002360        time 6m 14s       fid50k 277.7222  
+tick 17    kimg 2461.0   lod 4.00  minibatch 64   time 5h 43m 11s   sec/tick 1492.7  sec/kimg 14.92   maintenance 375.6  gpumem 5.4 
+network-snapshot-002460        time 6m 12s       fid50k 276.2343  
+tick 18    kimg 2561.0   lod 4.00  minibatch 64   time 6h 14m 06s   sec/tick 1480.9  sec/kimg 14.80   maintenance 374.3  gpumem 5.4 
+network-snapshot-002560        time 6m 12s       fid50k 276.4045  
+tick 19    kimg 2661.0   lod 4.00  minibatch 64   time 6h 45m 03s   sec/tick 1483.4  sec/kimg 14.83   maintenance 374.1  gpumem 5.4 
+network-snapshot-002661        time 6m 12s       fid50k 273.6409  
+tick 20    kimg 2761.1   lod 4.00  minibatch 64   time 7h 15m 59s   sec/tick 1482.2  sec/kimg 14.82   maintenance 373.9  gpumem 5.4 
+network-snapshot-002761        time 6m 10s       fid50k 268.7774  
+tick 21    kimg 2861.1   lod 4.00  minibatch 64   time 7h 46m 54s   sec/tick 1482.0  sec/kimg 14.81   maintenance 372.4  gpumem 5.4 
+network-snapshot-002861        time 6m 18s       fid50k 266.9249  
+tick 22    kimg 2961.1   lod 4.00  minibatch 64   time 8h 17m 55s   sec/tick 1481.4  sec/kimg 14.81   maintenance 380.3  gpumem 5.4 
+network-snapshot-002961        time 6m 11s       fid50k 263.8037  
+tick 23    kimg 3041.1   lod 3.93  minibatch 32   time 8h 57m 58s   sec/tick 2030.3  sec/kimg 25.38   maintenance 372.8  gpumem 5.4 
+network-snapshot-003041        time 8m 05s       fid50k 265.7728  
+tick 24    kimg 3121.1   lod 3.80  minibatch 32   time 9h 52m 54s   sec/tick 2807.4  sec/kimg 35.09   maintenance 488.3  gpumem 5.4 
+network-snapshot-003121        time 8m 05s       fid50k 270.1739  
+tick 25    kimg 3201.1   lod 3.66  minibatch 32   time 10h 47m 42s  sec/tick 2800.9  sec/kimg 35.01   maintenance 487.3  gpumem 5.4 
+network-snapshot-003201        time 8m 03s       fid50k 269.7647  
+tick 26    kimg 3281.1   lod 3.53  minibatch 32   time 11h 42m 34s  sec/tick 2805.8  sec/kimg 35.07   maintenance 485.3  gpumem 5.4 
+network-snapshot-003281        time 8m 15s       fid50k 265.0258  
+tick 27    kimg 3361.1   lod 3.40  minibatch 32   time 12h 37m 21s  sec/tick 2789.8  sec/kimg 34.87   maintenance 497.4  gpumem 5.4 
+network-snapshot-003361        time 7m 59s       fid50k 270.4493  
+tick 28    kimg 3441.1   lod 3.26  minibatch 32   time 13h 31m 54s  sec/tick 2791.4  sec/kimg 34.89   maintenance 481.5  gpumem 5.4 
+network-snapshot-003441        time 8m 04s       fid50k 260.7103  
+tick 29    kimg 3521.1   lod 3.13  minibatch 32   time 14h 26m 40s  sec/tick 2800.0  sec/kimg 35.00   maintenance 486.3  gpumem 5.4 
+network-snapshot-003521        time 8m 04s       fid50k 242.6613  
+tick 30    kimg 3601.1   lod 3.00  minibatch 32   time 15h 21m 27s  sec/tick 2800.7  sec/kimg 35.01   maintenance 485.9  gpumem 5.4 
+network-snapshot-003601        time 8m 03s       fid50k 231.6405  
+tick 31    kimg 3681.1   lod 3.00  minibatch 32   time 16h 15m 04s  sec/tick 2732.3  sec/kimg 34.15   maintenance 485.5  gpumem 5.4 
+network-snapshot-003681        time 8m 04s       fid50k 223.7301  
+tick 32    kimg 3761.1   lod 3.00  minibatch 32   time 17h 08m 45s  sec/tick 2734.3  sec/kimg 34.18   maintenance 486.1  gpumem 5.4 
+network-snapshot-003761        time 8m 04s       fid50k 219.4968  
+tick 33    kimg 3841.1   lod 3.00  minibatch 32   time 18h 02m 28s  sec/tick 2736.9  sec/kimg 34.21   maintenance 485.9  gpumem 5.4 
+network-snapshot-003841        time 8m 21s       fid50k 213.6284  
+tick 34    kimg 3921.1   lod 3.00  minibatch 32   time 18h 56m 28s  sec/tick 2737.5  sec/kimg 34.22   maintenance 503.2  gpumem 5.4 
+network-snapshot-003921        time 8m 04s       fid50k 213.2099  
+tick 35    kimg 4001.1   lod 3.00  minibatch 32   time 19h 50m 20s  sec/tick 2745.5  sec/kimg 34.32   maintenance 486.1  gpumem 5.4 
+network-snapshot-004001        time 8m 06s       fid50k 209.6562  
+tick 36    kimg 4081.1   lod 3.00  minibatch 32   time 20h 44m 20s  sec/tick 2751.1  sec/kimg 34.39   maintenance 488.5  gpumem 5.4 
+network-snapshot-004081        time 8m 06s       fid50k 206.6422  
+tick 37    kimg 4161.1   lod 3.00  minibatch 32   time 21h 38m 18s  sec/tick 2749.3  sec/kimg 34.37   maintenance 488.7  gpumem 5.4 
+network-snapshot-004161        time 8m 08s       fid50k 203.3720  
+tick 38    kimg 4221.1   lod 2.96  minibatch 16   time 22h 35m 00s  sec/tick 2912.7  sec/kimg 48.54   maintenance 489.7  gpumem 5.4 
+network-snapshot-004221        time 11m 13s      fid50k 199.8313  
