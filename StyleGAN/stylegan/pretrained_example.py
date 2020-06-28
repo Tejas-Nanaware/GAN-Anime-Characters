@@ -26,7 +26,7 @@ def main():
     # I downloaded the pickle file and using the local reference path
     # url = './karras2019stylegan-ffhq-1024x1024.pkl'
     # Using the new trained pickle file that would provide the anime face
-    url = './results/00003-sgan-ffhq-1gpu/network-snapshot-000280.pkl'
+    url = './results/00001-sgan-ffhq-1gpu/network-snapshot-001640.pkl'
     _G, _D, Gs = pickle.load(open(url, 'rb'))
 
     # with dnnlib.util.open_url(url, cache_dir=config.cache_dir) as f:
