@@ -45,6 +45,9 @@ The trained models can be downloaded using this [Link](https://drive.google.com/
   
 The StyleGAN models can be downloaded using this [Link](). Just use the latest model since I have kept all the historical models.  
   
+# Licence Information
+The Licence is MIT open source for the entire directory except StyleGAN which has its own licence present in the directory.
+  
 # Reference Papers
 1. Radford, A., Metz, L., & Chintala, S. (2015). Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv preprint arXiv:1511.06434. [DCGAN](https://arxiv.org/abs/1511.06434).
 2. Arjovsky, M., Chintala, S., & Bottou, L. (2017). Wasserstein gan. arXiv preprint arXiv:1701.07875. [Wasserstein GAN](https://arxiv.org/abs/1701.07875).
