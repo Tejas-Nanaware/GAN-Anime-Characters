@@ -43,7 +43,7 @@ Here are the timelapse videos to see how the generator progresses with number of
 # Downloads
 The trained models can be downloaded using this [Link](https://drive.google.com/drive/folders/1YyBgA7P4M0XkJjm4T6x_I4r-p0xbhMse?usp=sharing).  
   
-The StyleGAN models can be downloaded using this [Link](). Just use the latest model since I have kept all the historical models.  
+The StyleGAN models can be downloaded using this [Link](https://drive.google.com/drive/folders/1vbgdM78-TMt3fGtfKGYN7XpaLiz2eX-9?usp=sharing). Just use the latest model since I have kept all the historical models.  
   
 # Licence Information
 The Licence is MIT open source for the entire directory except StyleGAN which has its own licence present in the directory.
