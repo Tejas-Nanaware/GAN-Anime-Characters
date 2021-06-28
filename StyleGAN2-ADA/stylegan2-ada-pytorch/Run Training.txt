@@ -1,0 +1,16 @@
+cd C:\Users\monda\Documents\Tejas\GAN-Anime-Characters\StyleGAN2-ADA\stylegan2
+conda activate tf-gpu
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+python run_training.py --dataset anime_face --config config-f --data-dir=datasets
+
+cd C:\Users\monda\Documents\Tejas\GAN-Anime-Characters\StyleGAN2-ADA\stylegan2-ada
+python train.py --outdir=./results/ --gpus=1 --data=./datasets/anime_face --snap=5
+
+
+cd C:\Users\monda\Documents\Tejas\GAN-Anime-Characters\StyleGAN2-ADA\stylegan2-ada-pytorch
+conda activate pytorch
+python train.py --gpus=1 --outdir=./results --data=./datasets/archive.zip --snap=5
+
+conda install requests pillow scipy click psutil
+
+tensorboard=1.15 
