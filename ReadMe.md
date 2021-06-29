@@ -55,6 +55,8 @@ The trained models can be downloaded using this [Link](https://drive.google.com/
   
 The StyleGAN models can be downloaded using this [Link](https://drive.google.com/drive/folders/1vbgdM78-TMt3fGtfKGYN7XpaLiz2eX-9?usp=sharing).  
   
+The StyleGAN2 model can be downloaded using this [Link](https://drive.google.com/file/d/1Eu3WWMleLsMTams9oAA1Wwbd8l5_p8dK/view?usp=sharing).  
+  
 # Licence Information
 The Licence is MIT open source for the entire directory except StyleGAN which has its own licence present in the directory.
   
