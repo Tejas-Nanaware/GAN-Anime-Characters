@@ -37,7 +37,7 @@ Since the output after every epoch looks fascinating, I created timelapse videos
 Here are the timelapse videos to see how the generator progresses with number of epochs.  
   
 1. StyleGAN2  
-`Timelapse video will be updated soon`  
+[![Timelapse of Anime Faces using StyleGAN](https://img.youtube.com/vi/ORdGMtzepM0/default.jpg)](https://youtu.be/ORdGMtzepM0)  
 2. StyleGAN  
 [![Timelapse of Anime Faces using StyleGAN](https://img.youtube.com/vi/eCKPYn8xlN0/default.jpg)](https://youtu.be/eCKPYn8xlN0)
 3. DCGAN  
