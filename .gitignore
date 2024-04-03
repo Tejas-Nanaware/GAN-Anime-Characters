@@ -8,3 +8,8 @@ animeface-character-dataset/*
 WGeneratedFigures/*
 WGeneratedFigures */*
 WGANModels/*
+**/__pycache__
+**/_screenshots
+**/.zip
+StyleGAN3/stylegan3/training-runs/*
+StyleGAN3/stylegan3/anime*

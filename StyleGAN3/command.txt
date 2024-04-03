@@ -1,0 +1,1 @@
+python train.py --outdir=./training-runs --cfg=stylegan3-r --data=./datasets/anime_face.zip --gpus=1 --batch=24 --gamma=6.6 --mirror=1 --kimg=5000 --snap=5 --resume=./training-runs/00007-stylegan3-r-anime_face-gpus1-batch24-gamma6.6/network-snapshot-000400.pkl
