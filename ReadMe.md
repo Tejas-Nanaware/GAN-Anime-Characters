@@ -1,5 +1,5 @@
 # Introduction
-Apply several algorithms of Generative Adversarial Networks that can create anime faces. In this repository, I have applied four GAN Algorithms:  
+Apply several algorithms of Generative Adversarial Networks that can create anime faces. In this repository, I have applied these GAN Algorithms:  
 1. Deep Convolutional Generative Adversarial Networks (DCGAN).  
 2. Wasserstein Generative Adversarial Networks (WGAN).  
 3. StyleGAN by Nvidia Research Labs.  
